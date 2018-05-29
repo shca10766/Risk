@@ -4,12 +4,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Main {
-	
-	// Test
 
 	public static void main(String[] args) {
 		
-		//TACj
 		String [] tab = {
 				"Alaska", "Territoires du Nord", "Groenland", "Alberta", "Ontario", "Quebec", "Ouest des Etats-Unis", "Est des Etats-Unis", "Amérique Centrale",
 				"Venezuela", "Brésil", "Péru", "Argentine",
