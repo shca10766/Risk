@@ -1,6 +1,6 @@
 
 public class Armee {
-
+//
 	public int nombreSoldat;
 	public int nombreCavalier;
 	public int nombreCanon;
