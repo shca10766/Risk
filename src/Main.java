@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		//TAC
+		//TACj
 		String [] tab = {
 				"Alaska", "Territoires du Nord", "Groenland", "Alberta", "Ontario", "Quebec", "Ouest des Etats-Unis", "Est des Etats-Unis", "Amérique Centrale",
 				"Venezuela", "Brésil", "Péru", "Argentine",
