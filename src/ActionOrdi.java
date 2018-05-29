@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class ActionOrdi extends MouseAdapter {
-//	
+	
 	private boolean click = false; 
 	private double x1 = -1;
 	private double x2 = -1;
