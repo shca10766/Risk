@@ -85,7 +85,8 @@ public class Initialisation {
 		return Liste;
 	}
 
-	public void initialisationArmee(String [] tabTerritoire, Armee [] tab,  Carte c, Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6,  int i) {
+	public void initialisationArmee(String [] tabTerritoire, Armee [] tab,  Carte c, Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+		int i = j.getIndex();
 		int n = this.entier;
 		int u;
 		

@@ -197,8 +197,8 @@ public class Carte {
 		else if ((x < 680 && x > 660) && (y < 270 && y > 250)) {return 27;}
 		else if ((x < 800 && x > 780) && (y < 330 && y > 310)) {return 26;}
 		else if ((x < 820 && x > 800) && (y < 400 && y > 380)) {return 25;}
-		else if ((x < 620 && x > 600) && (y < 350 && y > 330)) {return 24;}
-		else if ((x < 740 && x > 720) && (y < 370 && y > 350)) {return 23;}
+		else if ((x < 740 && x > 720) && (y < 370 && y > 350)) {return 24;}
+		else if ((x < 620 && x > 600) && (y < 350 && y > 330)) {return 23;}
 		
 		// Océanie
 		else if ((x < 960 && x > 940) && (y < 590 && y > 570)) {return 19;}

@@ -1,15 +1,27 @@
 
 public class Bataille {
 
-	public Joueur j1;
-	public Joueur j2;
-	public Armee a1;
-	public Armee a2;
-	
-	public Bataille(Joueur J1, Joueur J2, Armee A1, Armee A2) {
-		this.j1 = J1;
-		this.j2 = J2;
-		this.a1 = A1;
-		this.a2 = A2;
+	public void attaque(Joueur j, Carte c, String [] tab) {
+		ActionOrdi o = new ActionOrdi();
+		int i1 = o.click(c);
+		
+		while (!j.contientListe(i1)) {
+			i1 = o.click(c);
+		}
+		String t1 = tab[i1];
+		
+		int i2 = o.click(c);
+		String t2 = tab[i2];
+		
+		boolean b = c.verifCorrespondance(t1, t2);
+		while (!b || j.contientListe(i2)) {
+			i2 = o.click(c);
+			t2 = tab[i2];
+			b = c.verifCorrespondance(t1, t2);
+		}
+		
+		int i = j.getIndex();
+		c.afficherMessage("Joueur " + i, "Le territoire " + t1 + " attaque le territoire " + t2, "", "");
 	}
+	
 }

@@ -4,7 +4,11 @@ public class Joueur {
 
 	public int nombreTerritoire;
 	public ArrayList al;
+	private int i;
 	
+	public Joueur(int index) {
+		this.i = index;
+	}
 	
 	public void setNombreTerritoire(int a) { this.nombreTerritoire += a; }
 	
@@ -21,4 +25,6 @@ public class Joueur {
 		}
 		return false;
 	}
+
+	public int getIndex() {return this.i;}
 }

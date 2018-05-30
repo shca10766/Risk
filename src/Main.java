@@ -69,52 +69,54 @@ public class Main {
 		
 		int n = o.touchePresse();
 		
-		Joueur j1 = new Joueur();
-		Joueur j2 = new Joueur();
-		Joueur j3 = new Joueur();
-		Joueur j4 = new Joueur();
-		Joueur j5 = new Joueur();
-		Joueur j6 = new Joueur();
+		Joueur j1 = new Joueur(1);
+		Joueur j2 = new Joueur(2);
+		Joueur j3 = new Joueur(3);
+		Joueur j4 = new Joueur(4);
+		Joueur j5 = new Joueur(5);
+		Joueur j6 = new Joueur(6);
 		
 		Initialisation init = new Initialisation(n);
 		
 		init.initialisationTerritoire(c, j1, j2, j3, j4, j5, j6);
 		
 		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);			
+		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);	
+		
+		Bataille bat = new Bataille();
+		bat.attaque(j1, c, tab);
 		
 		switch (n) {
 		case 2:
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6, 1);
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6, 2);
+			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
 			break;
 		case 3:
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6, 1);
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6, 2);
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6, 3);
+			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
 			break;
 		case 4:
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6, 1);
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6, 2);
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6, 3);
-			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6, 4);
+			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
 			break;
 		case 5:
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6, 1);
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6, 2);
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6, 3);
-			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6, 4);
-			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6, 5);
+			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6);
 			break;
 		case 6: 
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6, 1);
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6, 2);
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6, 3);
-			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6, 4);
-			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6, 5);
-			init.initialisationArmee(tab, tabArmee, c, j6, j1, j2, j3, j4, j5, j6, 6);
-			break;
-		}
+			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6);
+			init.initialisationArmee(tab, tabArmee, c, j6, j1, j2, j3, j4, j5, j6);
+			break;		}
 		
 		
 
