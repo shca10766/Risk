@@ -106,8 +106,12 @@ public class Initialisation {
 		while (limiteUnite != 0) {
 			
 			ActionOrdi o = new ActionOrdi();
-			
 			int k = o.click(c);
+			
+			while (!j.contientListe(k)) {
+				k = o.click(c);
+			}
+			
 			String terri = tabTerritoire[k];
 			Armee a = tab[k];
 			int p = a.puissance();
