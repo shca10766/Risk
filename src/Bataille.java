@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import edu.princeton.cs.introcs.StdDraw;
+
 public class Bataille {
 
 	public void bataille(Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, Carte c, String [] tab, Armee [] tabArmee, int n) {
@@ -22,10 +24,14 @@ public class Bataille {
 		}
 		
 		int iJ1 = j.getIndex();
-		c.afficherMessage("Joueur " + iJ1, "Votre territoire " + t1 + " attaque le territoire " + t2, "", "");
+		c.afficherMessage("Joueur " + iJ1, t1 + " attaque " + t2, "", "");
+		StdDraw.pause(2000);
 		Armee a1 = tabArmee[i1];
 		ArrayList al1 = armeeAttaquant(o, c, tabArmee, j1, j2, j3, j4, j5, j6, n, a1);
 		
+		ArrayList listeAttaquant = recupListe(al1, 0);
+		ArrayList attaquantPuissance = recupListe(al1, 1);
+
 		int iJ2 = joueurDefense (j1, j2, j3, j4, j5, j6, i2);
 		Armee a2 = tabArmee[i2];	
 		
@@ -33,8 +39,16 @@ public class Bataille {
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 		
 		c.afficherMessage("Joueur " + iJ2, "Défendez votre territoire", "", "");
+		StdDraw.pause(2000);
 		
 		ArrayList al2 = armeeDefense(o, c, tabArmee, j1, j2, j3, j4, j5, j6, n, a2);
+		
+		ArrayList listeDefense = recupListe(al2, 0);
+		ArrayList defensePuissance = recupListe(al2, 1);
+		
+		combat(listeAttaquant, listeDefense, attaquantPuissance, defensePuissance, a1, a2);
+		c.AfficherCarte();
+		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 	}
 	
 	public int joueurDefense(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int i) {
@@ -61,19 +75,52 @@ public class Bataille {
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
 			int cvBataille = choixNombreUnite("cavalier", cv, c, o, nombreUnite, 3);
-			verif1Repos("cavalier", uniteRepos, cvBataille, nombreUnite, al);
+			if (uniteRepos - cvBataille > 1) {
+				nombreUnite += cvBataille;
+				uniteRepos = uniteRepos - cvBataille;
+				
+				for (int k1 = 0; k1 < cvBataille; k1++) {
+					al.add((String) "cavalier");
+					int p = puissanceUnite("cavalier");
+					al.add((int) p);
+				}
+			}
+			
+			al = ordrePuissance(al, cvBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
 			int sBataille = choixNombreUnite("soldat", s, c, o, nombreUnite, 3);
-			verif1Repos("soldat", uniteRepos, sBataille, nombreUnite, al);
+			if (uniteRepos - sBataille > 1) {
+				nombreUnite += sBataille;
+				uniteRepos = uniteRepos - sBataille;
+				
+				for (int k2 = 0; k2 < sBataille; k2++) {
+					al.add((String) "soldat");
+					int p = puissanceUnite("soldat");
+					al.add((int) p);
+				}
+			}
+			
+			al = ordrePuissance(al, sBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
 			int cnBataille = choixNombreUnite("canon", cn, c, o, nombreUnite, 3);
-			verif1Repos("canon", uniteRepos, cnBataille, nombreUnite, al);
+			if (uniteRepos - cnBataille > 1) {
+				nombreUnite += cnBataille;
+				uniteRepos = uniteRepos - cnBataille;
+				
+				for (int k3 = 0; k3 < cnBataille; k3++) {
+					al.add((String) "canon");
+					int p = puissanceUnite("canon");
+					al.add((int) p);
+				}
+			}
+			
+			al = ordrePuissance(al, cnBataille, nombreUnite);
 		}
 		return al;
 	}
@@ -95,7 +142,10 @@ public class Bataille {
 			
 			for (int k2 = 0; k2 < sBataille; k2++) {
 				al.add("soldat");
+				int p = puissanceUnite("soldat");
+				al.add(p);
 			}
+			al = ordrePuissance(al, sBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
@@ -105,7 +155,10 @@ public class Bataille {
 			
 			for (int k3 = 0; k3 < cnBataille; k3++) {
 				al.add("canon");
+				int p = puissanceUnite("canon");
+				al.add(p);
 			}
+			al = ordrePuissance(al, cnBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
@@ -115,9 +168,29 @@ public class Bataille {
 			
 			for (int k1 = 0; k1 < cvBataille; k1++) {
 				al.add("cavalier");
+				int p = puissanceUnite("cavalier");
+				al.add(p);
 			}
+			al = ordrePuissance(al, cvBataille, nombreUnite);
 		}
 		return al;
+	}
+	
+	public ArrayList recupListe(ArrayList al, int i) {
+		ArrayList liste = new ArrayList();
+		if (i == 0) {
+			for (int k1 = 0; k1 < al.size(); k1 = k1 + 2) {
+				String u = (String) al.get(k1);
+				liste.add(u);
+			}
+		}
+		else {
+			for (int k2 = 0; k2 < al.size(); k2 = k2 + 2) {
+				int p = (int) al.get(k2+1);
+				liste.add(p);
+			}
+		}
+		return liste;
 	}
 	
 	public int choixNombreUnite(String unite, int u, Carte c, ActionOrdi o, int n, int max) {
@@ -138,15 +211,102 @@ public class Bataille {
 		}
 		return attaquant;
 	}
-	
-	public void verif1Repos(String unite, int uniteRepos, int uBataille, int nombreUnite, ArrayList al) {
-		if (uniteRepos - uBataille > 1) {
-			nombreUnite += uBataille;
-			uniteRepos = uniteRepos - uBataille;
-			
-			for (int k = 0; k < uBataille; k++) {
-				al.add(unite);
+
+	public void combat(ArrayList listeAtt, ArrayList listeDef, ArrayList puissanceAtt, ArrayList puissanceDef, Armee a1, Armee a2) {
+		int s1 = listeAtt.size();
+		int s2 = listeAtt.size();
+		int s = Math.min(s1, s2);
+		for (int k = 0; k < s; k++) {
+			String u1 = (String) listeAtt.get(k);
+			String u2 = (String) listeDef.get(k);
+			int p1 = (int) puissanceAtt.get(k);
+			int p2 = (int) puissanceDef.get(k);
+			if (p1 <= p2) {
+				uniteDetruite(u1, a1);
+			}
+			else {
+				uniteDetruite(u2, a2);
 			}
 		}
 	}
+	
+	public int puissanceUnite(String u) {
+		int p;
+		switch (u) {
+		case "soldat" :
+			p = (int) (6*Math.random()) + 1;
+			break;
+		case "cavalier" :
+			p = (int) (6*Math.random()) + 2;
+			break;
+		default :
+			p = (int) (6*Math.random()) + 4;
+			break;
+		}
+		return p;
+	}
+
+	public void uniteDetruite(String u, Armee a) {
+		switch(u) {
+		case "soldat" :
+			a.setSoldat(-1);
+			break;
+		case "cavalier" :
+			a.setCavalier(-1);
+			break;
+		default :
+			a.setCanon(-1);	
+		}
+	}
+
+	public ArrayList ordrePuissance(ArrayList al, int u, int n) {
+		int p1, p2, p3;
+		switch (u) {
+		case 2 :
+			p1 = (int) al.get(2*(n-u) + 1);
+			p2 = (int) al.get(2*(n-u) + 3);
+			int max = Math.max(p1, p2);
+			if (p1 < p2) {
+				al.remove(2*(n-u) + 1);
+				al.add(2*(n-u) + 1, p2);
+				al.remove(2*(n-u) + 3);
+				al.add(2*(n-u) + 3, p1);
+			}
+			break;
+		case 3 :
+			p1 = (int) al.get(2*(n-u) + 1);
+			p2 = (int) al.get(2*(n-u) + 3);
+			p3 = (int) al.get(2*(n-u) + 5);
+			int max1 = Math.max(p1, p2);
+			if (p1 < p2) {
+				al.remove(2*(n-u) + 1);
+				al.add(2*(n-u) + 1, p2);
+				al.remove(2*(n-u) + 3);
+				al.add(2*(n-u) + 3, p1);
+				int c1 = p1;
+				p1 = p2;
+				p2 = c1;
+				
+			}
+			int max2 = Math.max(p2, p3);
+			if (p1 < p2) {
+				al.remove(2*(n-u) + 3);
+				al.add(2*(n-u) + 3, p3);
+				al.remove(2*(n-u) + 5);
+				al.add(2*(n-u) + 5, p2);
+				int c2 = p2;
+				p2 = p3;
+				p3 = c2;
+			}
+			int max3 = Math.max(p1, p3);
+			if (p1 < p3) {
+				al.remove(2*(n-u) + 1);
+				al.add(2*(n-u) + 1, p3);
+				al.remove(2*(n-u) + 5);
+				al.add(2*(n-u) + 5, p1);
+			}	
+		}
+		return al;
+	}
+
 }

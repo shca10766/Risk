@@ -83,9 +83,6 @@ public class Main {
 		c.AfficherCarte();
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);	
 		
-		Bataille bat = new Bataille();
-		bat.attaque(j1, c, tab);
-		
 		switch (n) {
 		case 2:
 			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
@@ -116,9 +113,11 @@ public class Main {
 			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
 			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6);
 			init.initialisationArmee(tab, tabArmee, c, j6, j1, j2, j3, j4, j5, j6);
-			break;		}
+			break;		
+		}
 		
-		
+		Bataille bat = new Bataille();
+		bat.bataille(j1, j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
 
 	}
 	
