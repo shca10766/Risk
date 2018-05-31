@@ -230,7 +230,7 @@ public class Bataille {
 		ArrayList vainqueur = new ArrayList();
 		ArrayList defaite = new ArrayList();
 		int s1 = listeAtt.size();
-		int s2 = listeAtt.size();
+		int s2 = listeDef.size();
 		int s = Math.min(s1, s2);
 		for (int k = 0; k < s; k++) {
 			String u1 = (String) listeAtt.get(k);
@@ -242,11 +242,17 @@ public class Bataille {
 			}
 			else {
 				uniteDetruite(u2, a2);
-				vainqueur.add(u2);
+				vainqueur.add(u1);
 			}
 		}
 		int puissanceArmee2 = a2.puissance();
 		if (puissanceArmee2 == 0) {
+			if (s1 - s > 0) {
+				for (int i = s; i < s1; i++) {
+					String u = (String) listeAtt.get(i);
+					vainqueur.add(u);
+				}
+			}
 			return vainqueur;
 		}
 		else {

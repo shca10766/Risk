@@ -24,7 +24,7 @@ public class Deplacement {
 		else {return j6;}
 	}
 	
-	public void invasion(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+	public void invasion(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {		
 		int k1 = this.t1;
 		int k2 = this.t2;
 		Armee aVaincu = tab[k1];

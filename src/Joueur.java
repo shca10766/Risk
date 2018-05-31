@@ -29,11 +29,10 @@ public class Joueur {
 	public int getIndex() {return this.i;}
 
 	public void removeListe(int k) {
-		ArrayList L = this.al;
 		boolean indiceTrouve = false;
 		int i = 0;
 		while (!indiceTrouve) {
-			int t = (int) al.get(0);
+			int t = (int) this.al.get(i);
 			if (k == t) {
 				indiceTrouve = true;
 			}
