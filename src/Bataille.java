@@ -3,16 +3,20 @@ import java.util.ArrayList;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Bataille {
-
-	public void bataille(Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, Carte c, String [] tab, Armee [] tabArmee, int n) {
-		ActionOrdi o = new ActionOrdi();
+	public int t1;
+	public int t2;
+	
+	public int territoireAttaquant(Carte c, Joueur j, ActionOrdi o) {
 		int i1 = o.click(c);
 		
 		while (!j.contientListe(i1)) {
 			i1 = o.click(c);
 		}
-		String t1 = tab[i1];
-		
+		this.t1 = i1;
+		return i1;
+	}
+	
+	public int territoireAttaque(Carte c, Joueur j, ActionOrdi o, String [] tab, String t1) {
 		int i2 = o.click(c);
 		String t2 = tab[i2];
 		
@@ -22,6 +26,17 @@ public class Bataille {
 			t2 = tab[i2];
 			b = c.verifCorrespondance(t1, t2);
 		}
+		this.t2 = i2;
+		return i2;
+	}
+
+	public ArrayList bataille(Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, Carte c, String [] tab, Armee [] tabArmee, int n) {
+		ActionOrdi o = new ActionOrdi();
+		int i1 = territoireAttaquant(c, j, o);
+		String t1 = tab[i1];
+		
+		int i2 = territoireAttaque(c, j, o, tab, t1);
+		String t2 = tab[i2];
 		
 		int iJ1 = j.getIndex();
 		c.afficherMessage("Joueur " + iJ1, t1 + " attaque " + t2, "", "");
@@ -46,9 +61,8 @@ public class Bataille {
 		ArrayList listeDefense = recupListe(al2, 0);
 		ArrayList defensePuissance = recupListe(al2, 1);
 		
-		combat(listeAttaquant, listeDefense, attaquantPuissance, defensePuissance, a1, a2);
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+		ArrayList vainqueur = combat(listeAttaquant, listeDefense, attaquantPuissance, defensePuissance, a1, a2);
+		return vainqueur;
 	}
 	
 	public int joueurDefense(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int i) {
@@ -195,7 +209,7 @@ public class Bataille {
 	
 	public int choixNombreUnite(String unite, int u, Carte c, ActionOrdi o, int n, int max) {
 		int attaquant = 0;
-		if (u != 0) {
+		if (u != 0 || max == 2) {
 			c.afficherMessage("Combien de " + unite + " dans la bataille ?", "", "", "");
 			attaquant = o.touchePresse();
 			while (attaquant > u) {
@@ -212,7 +226,9 @@ public class Bataille {
 		return attaquant;
 	}
 
-	public void combat(ArrayList listeAtt, ArrayList listeDef, ArrayList puissanceAtt, ArrayList puissanceDef, Armee a1, Armee a2) {
+	public ArrayList combat(ArrayList listeAtt, ArrayList listeDef, ArrayList puissanceAtt, ArrayList puissanceDef, Armee a1, Armee a2) {
+		ArrayList vainqueur = new ArrayList();
+		ArrayList defaite = new ArrayList();
 		int s1 = listeAtt.size();
 		int s2 = listeAtt.size();
 		int s = Math.min(s1, s2);
@@ -226,7 +242,15 @@ public class Bataille {
 			}
 			else {
 				uniteDetruite(u2, a2);
+				vainqueur.add(u2);
 			}
+		}
+		int puissanceArmee2 = a2.puissance();
+		if (puissanceArmee2 == 0) {
+			return vainqueur;
+		}
+		else {
+			return defaite;
 		}
 	}
 	
