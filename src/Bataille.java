@@ -100,8 +100,6 @@ public class Bataille {
 				}
 			}
 			
-			al = ordrePuissance(al, cvBataille, nombreUnite);
-			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
@@ -116,8 +114,6 @@ public class Bataille {
 					al.add((int) p);
 				}
 			}
-			
-			al = ordrePuissance(al, sBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
@@ -134,7 +130,7 @@ public class Bataille {
 				}
 			}
 			
-			al = ordrePuissance(al, cnBataille, nombreUnite);
+			al = ordrePuissance(al);
 		}
 		return al;
 	}
@@ -159,7 +155,6 @@ public class Bataille {
 				int p = puissanceUnite("soldat");
 				al.add(p);
 			}
-			al = ordrePuissance(al, sBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
@@ -172,7 +167,6 @@ public class Bataille {
 				int p = puissanceUnite("canon");
 				al.add(p);
 			}
-			al = ordrePuissance(al, cnBataille, nombreUnite);
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
@@ -185,7 +179,7 @@ public class Bataille {
 				int p = puissanceUnite("cavalier");
 				al.add(p);
 			}
-			al = ordrePuissance(al, cvBataille, nombreUnite);
+			al = ordrePuissance(al);
 		}
 		return al;
 	}
@@ -289,51 +283,78 @@ public class Bataille {
 		}
 	}
 
-	public ArrayList ordrePuissance(ArrayList al, int u, int n) {
+	public ArrayList ordrePuissance(ArrayList al) {
 		int p1, p2, p3;
+		String u1, u2, u3;
+		int u = al.size();
 		switch (u) {
 		case 2 :
-			p1 = (int) al.get(2*(n-u) + 1);
-			p2 = (int) al.get(2*(n-u) + 3);
+			p1 = (int) al.get(1);
+			u1 = (String) al.get(0);
+			p2 = (int) al.get(3);
+			u2 = (String) al.get(2);
 			int max = Math.max(p1, p2);
 			if (p1 < p2) {
-				al.remove(2*(n-u) + 1);
-				al.add(2*(n-u) + 1, p2);
-				al.remove(2*(n-u) + 3);
-				al.add(2*(n-u) + 3, p1);
+				al.remove(1);
+				al.add(1, p2);
+				
+				al.remove(0);
+				al.add(0, u2);
+				
+				al.remove(3);
+				al.add(3, p1);
+				
+				al.remove(2);
+				al.add(2, u1);
 			}
 			break;
 		case 3 :
-			p1 = (int) al.get(2*(n-u) + 1);
-			p2 = (int) al.get(2*(n-u) + 3);
-			p3 = (int) al.get(2*(n-u) + 5);
+			p1 = (int) al.get(1);
+			u1 = (String) al.get(0);
+			p2 = (int) al.get(3);
+			u2 = (String) al.get(2);
+			p3 = (int) al.get(5);
+			u3 = (String) al.get(4);
 			int max1 = Math.max(p1, p2);
 			if (p1 < p2) {
-				al.remove(2*(n-u) + 1);
-				al.add(2*(n-u) + 1, p2);
-				al.remove(2*(n-u) + 3);
-				al.add(2*(n-u) + 3, p1);
+				al.remove(1);
+				al.add(1, p2);
+				
+				al.remove(0);
+				al.add(0, u2);
+				
+				al.remove(3);
+				al.add(3, p1);
+				
+				al.remove(2);
+				al.add(2, u1);
 				int c1 = p1;
+				String s1 = u1;
 				p1 = p2;
+				u1 = u2;
 				p2 = c1;
+				u2 = s1;
 				
 			}
 			int max2 = Math.max(p2, p3);
 			if (p1 < p2) {
-				al.remove(2*(n-u) + 3);
-				al.add(2*(n-u) + 3, p3);
-				al.remove(2*(n-u) + 5);
-				al.add(2*(n-u) + 5, p2);
+				al.remove(3);
+				al.add(3, p3);
+				al.remove(5);
+				al.add(5, p2);
 				int c2 = p2;
+				String s2 = u2;
 				p2 = p3;
+				u2 = u3;
 				p3 = c2;
+				u3 = s2;
 			}
 			int max3 = Math.max(p1, p3);
 			if (p1 < p3) {
-				al.remove(2*(n-u) + 1);
-				al.add(2*(n-u) + 1, p3);
-				al.remove(2*(n-u) + 5);
-				al.add(2*(n-u) + 5, p1);
+				al.remove(1);
+				al.add(1, p3);
+				al.remove(5);
+				al.add(5, p1);
 			}	
 		}
 		return al;
