@@ -115,24 +115,36 @@ public class Main {
 			break;		
 		}
 		
-		Deplacement dep1 = new Deplacement(j1);
-		dep1.deplacement(c, tabArmee, tab);
+		c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Rien");
+		int choix = o.touchePresse();
 		
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
-		
-		Bataille bat = new Bataille();
-		ArrayList vainqueur = bat.bataille(j1, j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
-		int territoireAttaquant = bat.t1;
-		int territoireAttaque = bat.t2;
-		
-		if (!vainqueur.isEmpty()) {
-			Deplacement dep = new Deplacement(j1, vainqueur, territoireAttaque, territoireAttaquant);
-			dep.invasion(tabArmee, j1, j2, j3, j4, j5, j6);
+		while (choix != 0) {
+			
+			c.AfficherCarte();
+			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+			
+			if (choix == 1) {
+				Bataille bat = new Bataille();
+				ArrayList vainqueur = bat.bataille(j1, j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
+				int territoireAttaquant = bat.t1;
+				int territoireAttaque = bat.t2;
+				
+				if (!vainqueur.isEmpty()) {
+					Deplacement dep = new Deplacement(j1, vainqueur, territoireAttaque, territoireAttaquant);
+					dep.invasion(tabArmee, j1, j2, j3, j4, j5, j6);
+				}
+			}
+			
+			else if (choix == 2) {
+				Deplacement dep1 = new Deplacement(j1);
+				dep1.deplacement(c, tabArmee, tab);
+			}
+			c.AfficherCarte();
+			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+			c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Rien");
+			choix = o.touchePresse();
+			
 		}
-		
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 	}
 	
 }
