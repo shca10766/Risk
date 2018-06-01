@@ -80,29 +80,18 @@ public class Renfort {
 			Armee a = tab[k];
 			int p = a.puissance();
 			
-			limiteUnite = ajoutArmee("canon", terri, o, limiteUnite, p, i, n, 7, c, a);
+			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, p, i, n, 7, c, a);
 			p = a.puissance();
 			
-			c.AfficherCarte();
-			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
-			
-			limiteUnite = ajoutArmee("cavalier", terri, o, limiteUnite, p, i, n, 3, c, a);
+			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, p, i, n, 3, c, a);
 			p = a.puissance();
 			
-			c.AfficherCarte();
-			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
-			
-			limiteUnite = ajoutArmee("soldat", terri, o, limiteUnite, p, i, n, 1, c, a);
+			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, p, i, n, 1, c, a);
 			p = a.puissance();
-			
-			c.AfficherCarte();
-			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
-			
-			tab[k] = a;
 		}
 	}
 	
-	public int ajoutArmee(String unite, String terri, ActionOrdi o, int l, int p, int i, int n, int m, Carte c, Armee a) {
+	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int l, int p, int i, int n, int m, Carte c, Armee a) {
 		if (l >= m) {
 			int num = 0;
 
@@ -129,6 +118,8 @@ public class Renfort {
 				c.afficherMessage("", "", "", "Nombre d'unité restant insuffisant");
 				StdDraw.pause(3000);
 			}
+			c.AfficherCarte();
+			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
 		}
 		return l;
 	}

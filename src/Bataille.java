@@ -83,7 +83,7 @@ public class Bataille {
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
 			int cvBataille = choixNombreUnite("cavalier", cv, c, o, nombreUnite, 3);
-			if (uniteRepos - cvBataille > 1) {
+			if (uniteRepos - cvBataille >= 1) {
 				nombreUnite += cvBataille;
 				uniteRepos = uniteRepos - cvBataille;
 				
@@ -98,7 +98,7 @@ public class Bataille {
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
 			int sBataille = choixNombreUnite("soldat", s, c, o, nombreUnite, 3);
-			if (uniteRepos - sBataille > 1) {
+			if (uniteRepos - sBataille >= 1) {
 				nombreUnite += sBataille;
 				uniteRepos = uniteRepos - sBataille;
 				
@@ -113,7 +113,7 @@ public class Bataille {
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
 			int cnBataille = choixNombreUnite("canon", cn, c, o, nombreUnite, 3);
-			if (uniteRepos - cnBataille > 1) {
+			if (uniteRepos - cnBataille >= 1) {
 				nombreUnite += cnBataille;
 				uniteRepos = uniteRepos - cnBataille;
 				

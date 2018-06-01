@@ -203,7 +203,7 @@ public class Carte {
 		// Océanie
 		else if ((x < 960 && x > 940) && (y < 590 && y > 570)) {return 19;}
 		else if ((x < 860 && x > 840) && (y < 600 && y > 580)) {return 20;}
-		else if ((x < 910 && x > 900) && (y < 490 && y > 475)) {return 21;}
+		else if ((x < 920 && x > 890) && (y < 490 && y > 475)) {return 21;}
 		else if ((x < 830 && x > 810) && (y < 500 && y > 480)) {return 22;}
 		
 		// Amérique du Sud

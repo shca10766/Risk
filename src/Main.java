@@ -1,17 +1,13 @@
-import edu.princeton.cs.introcs.StdDraw;
-
-import java.util.ArrayList;
-
 public class Main {
 
 	public static void main(String[] args) {
 		
 		String [] tab = {
-				"Alaska", "Territoires du Nord", "Groenland", "Alberta", "Ontario", "Quebec", "Ouest des Etats-Unis", "Est des Etats-Unis", "AmÃ©rique Centrale",
-				"Venezuela", "BrÃ©sil", "PÃ©ru", "Argentine",
+				"Alaska", "Territoires du Nord", "Groenland", "Alberta", "Ontario", "Quebec", "Ouest des Etats-Unis", "Est des Etats-Unis", "Amérique Centrale",
+				"Venezuela", "Brésil", "Péru", "Argentine",
 				"Afrique du Nord", "Egypte", "Congo", "Est de l'Afrique", "Sud de l'Afrique", "Madadascar",
-				"Est Australien", "Ouest Australien", "Nouvelle GuinÃ©e", "IndonÃ©sie",
-				"Moyen Orient", "Inde", "Siam", "Chine", "Afghanistan", "Mongolie", "Japon", "Oural", "Irkoutsk", "Kamchatka", "SibÃ©rie", "Yakoutsk",
+				"Est Australien", "Ouest Australien", "Nouvelle Guinée", "Indonésie",
+				"Moyen Orient", "Inde", "Siam", "Chine", "Afghanistan", "Mongolie", "Japon", "Oural", "Irkoutsk", "Kamchatka", "Sibérie", "Yakoutsk",
 				"Ukraine", "Scandinavie", "Nord de l'Europe", "Sud de l'Europe", "Ouest de l'Europe", "Islande", "Grande Bretagne"			
 		};
 		
@@ -62,7 +58,7 @@ public class Main {
 		
 		Carte c = new Carte();
 		c.AfficherCarte();
-		c.afficherMessage("Combien de joueurs Ãªtes vous ?", "Choisir un chiffre entre 2 et 6", "", "");
+		c.afficherMessage("Combien de joueurs êtes vous ?", "Choisir un chiffre entre 2 et 6", "", "");
 		
 		ActionOrdi o = new ActionOrdi();
 		
@@ -192,6 +188,7 @@ public class Main {
 			
 			nombreTour++;
 		}
+		System.out.println("ok");
 		
 	}
 	
