@@ -124,8 +124,10 @@ public class Main {
 		c.AfficherCarte();
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 		
-		Deplacement dep = new Deplacement(j1, vainqueur, territoireAttaque, territoireAttaquant);
-		dep.invasion(tabArmee, j1, j2, j3, j4, j5, j6);
+		if (!vainqueur.isEmpty()) {
+			Deplacement dep = new Deplacement(j1, vainqueur, territoireAttaque, territoireAttaquant);
+			dep.invasion(tabArmee, j1, j2, j3, j4, j5, j6);
+		}
 		
 		c.AfficherCarte();
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
