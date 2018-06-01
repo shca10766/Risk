@@ -1,11 +1,6 @@
-import java.awt.event.MouseEvent;
-
-import javax.swing.JFrame;
-
-import java.awt.event.MouseAdapter;
 import edu.princeton.cs.introcs.StdDraw;
 
-public class ActionOrdi extends MouseAdapter {
+public class ActionOrdi {
 	// back
 	private boolean click = false; 
 	private double x1 = -1;

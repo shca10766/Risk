@@ -115,36 +115,84 @@ public class Main {
 			break;		
 		}
 		
-		c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Rien");
-		int choix = o.touchePresse();
+		int nombreTour = 0;
+		boolean V1 = false;
+		boolean V2 = false;
+		boolean V3 = false;
+		boolean V4 = false;
+		boolean V5 = false;
+		boolean V6 = false;
 		
-		while (choix != 0) {
+		
+		while (!V1 || !V2 || !V3 || !V4 || !V5 || !V6) {
+			Tour T1 = new Tour(j1);
+			Tour T2 = new Tour(j2);
+			Tour T3 = new Tour(j3);
+			Tour T4 = new Tour(j4);
+			Tour T5 = new Tour(j5);
+			Tour T6 = new Tour(j6);
 			
-			c.AfficherCarte();
-			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
-			
-			if (choix == 1) {
-				Bataille bat = new Bataille();
-				ArrayList vainqueur = bat.bataille(j1, j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
-				int territoireAttaquant = bat.t1;
-				int territoireAttaque = bat.t2;
+			switch (n) {
+			case 2 : 
+				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 				
-				if (!vainqueur.isEmpty()) {
-					Deplacement dep = new Deplacement(j1, vainqueur, territoireAttaque, territoireAttaquant);
-					dep.invasion(tabArmee, j1, j2, j3, j4, j5, j6);
-				}
+				V1 = j1.verifVictoire();
+				V2 = j2.verifVictoire();
+				break;
+			case 3:
+				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				
+				V1 = j1.verifVictoire();
+				V2 = j2.verifVictoire();
+				V3 = j3.verifVictoire();
+				break;
+			case 4:
+				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				
+				V1 = j1.verifVictoire();
+				V2 = j2.verifVictoire();
+				V3 = j3.verifVictoire();
+				V4 = j4.verifVictoire();
+				break;
+			case 5:
+				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				
+				V1 = j1.verifVictoire();
+				V2 = j2.verifVictoire();
+				V3 = j3.verifVictoire();
+				V4 = j4.verifVictoire();
+				V5 = j5.verifVictoire();
+				break;
+			case 6 :
+				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				T6.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+				
+				V1 = j1.verifVictoire();
+				V2 = j2.verifVictoire();
+				V3 = j3.verifVictoire();
+				V4 = j4.verifVictoire();
+				V5 = j5.verifVictoire();
+				V6 = j6.verifVictoire();
+				break;
 			}
 			
-			else if (choix == 2) {
-				Deplacement dep1 = new Deplacement(j1);
-				dep1.deplacement(c, tabArmee, tab);
-			}
-			c.AfficherCarte();
-			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
-			c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Rien");
-			choix = o.touchePresse();
-			
+			nombreTour++;
 		}
+		
 	}
 	
 }

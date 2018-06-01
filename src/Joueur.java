@@ -5,10 +5,9 @@ public class Joueur {
 	public int nombreTerritoire;
 	public ArrayList al;
 	private int i;
+	public int territoireCapture = 0;
 	
-	public Joueur(int index) {
-		this.i = index;
-	}
+	public Joueur(int index) {this.i = index;}
 	
 	public void setNombreTerritoire(int a) { this.nombreTerritoire += a; }
 	
@@ -47,4 +46,18 @@ public class Joueur {
 		this.al.add(k);
 	}
 
+	public void setTerritoireCapture() {this.territoireCapture++;}
+	
+	public void reinitTerritoireCapture() {this.territoireCapture = 0;}
+	
+	public int getTerritoireCapture() {return this.territoireCapture;}
+
+	public boolean verifVictoire() {
+		for (int i = 0; i < 42; i++) {
+			if (!contientListe(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
