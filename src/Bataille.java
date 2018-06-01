@@ -50,7 +50,7 @@ public class Bataille {
 		int iJ2 = joueurDefense (j1, j2, j3, j4, j5, j6, i2);
 		Armee a2 = tabArmee[i2];	
 		
-		ArrayList al2 = armeeDefense(o, c, tabArmee, j1, j2, j3, j4, j5, j6, n, a2);
+		ArrayList al2 = armeeDefense(a2);
 		
 		ArrayList listeDefense = recupListe(al2, 0);
 		ArrayList defensePuissance = recupListe(al2, 1);
@@ -129,12 +129,9 @@ public class Bataille {
 		return al;
 	}
 	
-	public ArrayList armeeDefense(ActionOrdi o, Carte c, Armee [] tabArmee, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int n, Armee a1) {
+	public ArrayList armeeDefense(Armee a1) {
 		int nombreUnite = 0;
 		ArrayList al = new ArrayList();
-		
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 		
 		int cn = a1.getCanon();
 		int cv = a1.getCavalier();
