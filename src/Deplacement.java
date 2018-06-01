@@ -14,6 +14,68 @@ public class Deplacement {
 		this.t2 = T2;
 	}
 	
+	public Deplacement(Joueur J) {
+		this.j = J;
+	}
+	
+	public void deplacement(Carte c, Armee [] tab, String [] tabTerritoire) {
+		Joueur j = this.j;
+		ActionOrdi o = new ActionOrdi();
+		int territoireDepart = choixTerritoire(o, c);
+		int territoireArrive = choixTerritoire(o, c);
+		
+		String t1 = tabTerritoire[territoireDepart];
+		String t2 = tabTerritoire[territoireArrive];
+		boolean territoireVoisin = c.verifCorrespondance(t1, t2);
+		
+		while (!territoireVoisin) {
+			territoireArrive = choixTerritoire(o, c);
+			t2 = tabTerritoire[territoireArrive];
+			territoireVoisin = c.verifCorrespondance(t1, t2);
+		}
+		
+		Armee a1 = tab[territoireDepart];
+		Armee a2 = tab[territoireArrive];
+		
+		int cn = a1.getCanon();
+		int cv = a1.getCavalier();
+		int s = a1.getSoldat();
+		int p = a1.puissance();
+		
+		c.afficherMessage("Combien de canon deplacer?", "Combien de cavalier deplacer?", "Combien de soldat deplacer", "");
+		
+		int cnDep = o.touchePresse();
+		if ((cnDep <= cn) && (p - cnDep > 0)) {
+			a1.setCanon(-cnDep);
+			a2.setCanon(cnDep);
+		}
+		p = a1.puissance();
+		
+		int cvDep = o.touchePresse();
+		if ((cvDep <= cv) && (p - cvDep > 0)) {
+			a1.setCavalier(-cvDep);
+			a2.setCavalier(cvDep);
+		}
+		p = a1.puissance();
+		
+		int sDep = o.touchePresse();
+		if ((sDep <= s) && (p - sDep > 0)) {
+			a1.setSoldat(-sDep);
+			a2.setSoldat(sDep);
+		}
+	}
+	
+	public int choixTerritoire(ActionOrdi o, Carte c) {
+		Joueur j = this.j;
+		int t = o.click(c);
+		boolean possessionJoueur = j.contientListe(t);
+		while (!possessionJoueur) {
+			t = o.click(c);
+			possessionJoueur = j.contientListe(t);
+		}
+		return t;
+	}
+	
 	public Joueur joueurVaincu(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
 		int i = this.t1;
 		if (j1.contientListe(i)) {return j1;}

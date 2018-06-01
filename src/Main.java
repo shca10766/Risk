@@ -1,6 +1,5 @@
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Main {
@@ -115,6 +114,12 @@ public class Main {
 			init.initialisationArmee(tab, tabArmee, c, j6, j1, j2, j3, j4, j5, j6);
 			break;		
 		}
+		
+		Deplacement dep1 = new Deplacement(j1);
+		dep1.deplacement(c, tabArmee, tab);
+		
+		c.AfficherCarte();
+		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 		
 		Bataille bat = new Bataille();
 		ArrayList vainqueur = bat.bataille(j1, j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
