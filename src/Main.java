@@ -120,7 +120,7 @@ public class Main {
 		boolean V6 = false;
 		
 		
-		while (!V1 || !V2 || !V3 || !V4 || !V5 || !V6) {
+		while (!V1 && !V2 && !V3 && !V4 && !V5 && !V6) {
 			Tour T1 = new Tour(j1);
 			Tour T2 = new Tour(j2);
 			Tour T3 = new Tour(j3);
@@ -131,64 +131,96 @@ public class Main {
 			switch (n) {
 			case 2 : 
 				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				
 				V1 = j1.verifVictoire();
-				V2 = j2.verifVictoire();
+				
+				if (!V1) {
+					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V2 = j2.verifVictoire();
+				}
 				break;
 			case 3:
 				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				
 				V1 = j1.verifVictoire();
-				V2 = j2.verifVictoire();
-				V3 = j3.verifVictoire();
+				
+				if (!V1) {
+					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V2 = j2.verifVictoire();
+				}
+				if (!V1 && !V2) {
+					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V3 = j3.verifVictoire();
+				}
 				break;
 			case 4:
 				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				
 				V1 = j1.verifVictoire();
-				V2 = j2.verifVictoire();
-				V3 = j3.verifVictoire();
-				V4 = j4.verifVictoire();
+				
+				if (!V1) {
+					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V2 = j2.verifVictoire();
+				}
+				if (!V1 && !V2) {
+					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V3 = j3.verifVictoire();
+				}
+				if (!V1 && !V2 && !V3) {
+					T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V4 = j4.verifVictoire();
+				}
 				break;
 			case 5:
 				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				
 				V1 = j1.verifVictoire();
-				V2 = j2.verifVictoire();
-				V3 = j3.verifVictoire();
-				V4 = j4.verifVictoire();
-				V5 = j5.verifVictoire();
+				
+				if (!V1) {
+					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V2 = j2.verifVictoire();
+				}
+				if (!V1 && !V2) {
+					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V3 = j3.verifVictoire();
+				}
+				if (!V1 && !V2 && !V3) {
+					T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V4 = j4.verifVictoire();
+				}
+				if (!V1 && !V2 && !V3 && !V4) {
+					T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V5 = j5.verifVictoire();
+				}
 				break;
 			case 6 :
 				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				T6.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				
 				V1 = j1.verifVictoire();
-				V2 = j2.verifVictoire();
-				V3 = j3.verifVictoire();
-				V4 = j4.verifVictoire();
-				V5 = j5.verifVictoire();
-				V6 = j6.verifVictoire();
+				
+				if (!V1) {
+					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V2 = j2.verifVictoire();
+				}
+				if (!V1 && !V2) {
+					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V3 = j3.verifVictoire();
+				}
+				if (!V1 && !V2 && !V3) {
+					T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V4 = j4.verifVictoire();
+				}
+				if (!V1 && !V2 && !V3 && !V4) {
+					T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V5 = j5.verifVictoire();
+				}
+				if (!V1 && !V2 && !V3 && !V4 && !V5) {
+					T6.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V6 = j6.verifVictoire();
+				}
 				break;
 			}
 			
 			nombreTour++;
 		}
-		System.out.println("ok");
+		c.AfficherCarte();
+		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+		c.afficherMessage("Victoire", "", "", "");
 		
 	}
 	
