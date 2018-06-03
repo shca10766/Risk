@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Initialisation {
@@ -10,10 +9,10 @@ public class Initialisation {
 		this.entier = n;
 	}
 	
-	public void initialisationTerritoire(Carte c, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+	public void initialisationTerritoire(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
 		int n = this.entier;
 		
-		ArrayList al = new ArrayList();
+		ArrayList<Integer> al = new ArrayList<Integer>();
 		for (int index = 0; index < 42 ; index++) {
 			al.add(index);
 		}
@@ -52,9 +51,9 @@ public class Initialisation {
 		}
 	}
 	
-	public ArrayList repartition(ArrayList al, int j, int n) {
+	public ArrayList<Integer> repartition(ArrayList<Integer> alTerritoireNonReparti, int j, int numeroJoueur) {
 		int init = 0;
-		ArrayList Liste = new ArrayList();
+		ArrayList<Integer> ListeTerritoireJoueur = new ArrayList<Integer>();
 		switch (j) {
 			case 2:
 				init = 21;
@@ -63,35 +62,34 @@ public class Initialisation {
 				init = 14;
 				break;
 			case 4:
-				if (n == 1 || n == 2) { init = 10;}
+				if (numeroJoueur == 1 || numeroJoueur == 2) { init = 10;}
 				else {init = 11;}
 				break;
 			case 5 :
-				if (n == 4 || n == 5) {init = 9;}
+				if (numeroJoueur == 4 || numeroJoueur == 5) {init = 9;}
 				else {init = 8;}
 				break;
 			case 6 :
 				init = 7;
 				break;
 		}
-		int t = Liste.size();
+		int t = ListeTerritoireJoueur.size();
 		while (t < init ) {
-			int s = al.size();
-			int index = (int) ((s-1)*Math.random());
-			Liste.add(al.get(index));
-			al.remove(index);
-			t = Liste.size();	
+			int s = alTerritoireNonReparti.size();
+			int indexTerritoire = (int) ((s-1)*Math.random());
+			ListeTerritoireJoueur.add(alTerritoireNonReparti.get(indexTerritoire));
+			alTerritoireNonReparti.remove(indexTerritoire);
+			t = ListeTerritoireJoueur.size();	
 		}
-		return Liste;
+		return ListeTerritoireJoueur;
 	}
 
-	public void initialisationArmee(String [] tabTerritoire, Armee [] tab,  Carte c, Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+	public void initialisationArmee(String [] tabTerritoire, Armee [] tabArmee,  Carte c, Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
 		int i = j.getIndex();
 		int n = this.entier;
-		int u;
 		
-		ArrayList al = j.getListeTerritoire();
-		int taille = j.al.size();
+		ArrayList<Integer> al = j.getListeTerritoire();
+		int nombreUnitePlace = j.alTerritoire.size();
 		
 		int limiteUnite = 0;
 		switch(n) {
@@ -102,7 +100,7 @@ public class Initialisation {
 		case 6 : limiteUnite = 20; break;
 		}
 		
-		limiteUnite = limiteUnite - taille;
+		limiteUnite = limiteUnite - nombreUnitePlace;
 		
 		while (limiteUnite != 0) {
 			
@@ -114,51 +112,35 @@ public class Initialisation {
 			}
 			
 			String terri = tabTerritoire[k];
-			Armee a = tab[k];
-			int p = a.puissance();
+			Armee a = tabArmee[k];
 			
-			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, p, i, n, 7, c, a);
-			p = a.puissance();
+			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, i, n, 7, c, a);
 			
-			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, p, i, n, 3, c, a);
-			p = a.puissance();
+			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, i, n, 3, c, a);
 			
-			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, p, i, n, 1, c, a);
-			p = a.puissance();
+			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, i, n, 1, c, a);
 		}
 	}
 	
-	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int l, int p, int i, int n, int m, Carte c, Armee a) {
-		if (l >= m) {
-			int num = 0;
-
-			switch (unite) {
-			case "canon" : num = a.getCanon(); break;
-			case "cavalier" : num =  a.getCavalier(); break;
-			case "soldat" : num = a.getSoldat(); break;
-			}
+	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int limite, int i, int n, int cout, Carte c, Armee a) {
+		if (limite >= cout) {
+			c.afficherMessage("Joueur " + i, "Placez encore " +limite+ " unité(s))", "Territoire " +terri, "Combien de " + unite + " ajouter?");
 			
-			c.afficherMessage("Joueur " + i + " (reste " +l+ " unité(s))", terri + " a une puissance de " + p, "Combien de " + unite + "? (déjà " + num + ")", "");
+			int touche = o.touchePresse();
 			
-			int u = o.touchePresse();
-			
-			if (l >= u*m) {
+			if (limite >= touche*cout) {
 				switch (unite) {
-				case "canon" : a.setCanon(u); break;
-				case "cavalier" : a.setCavalier(u); break;
-				case "soldat" : a.setSoldat(u); break;
+				case "canon" : a.setCanon(touche); break;
+				case "cavalier" : a.setCavalier(touche); break;
+				case "soldat" : a.setSoldat(touche); break;
 				}
-				l = l - m*u;
+				limite = limite - cout*touche;
 			}
 			
-			else {
-				c.afficherMessage("", "", "", "Nombre d'unité restant insuffisant");
-				StdDraw.pause(3000);
-			}
 			c.AfficherCarte();
 			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
 		}
-		return l;
+		return limite;
 	}
 
 }

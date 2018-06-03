@@ -1,7 +1,7 @@
 import edu.princeton.cs.introcs.StdDraw;
 
 public class ActionOrdi {
-	// back
+
 	private boolean click = false; 
 	private double x1 = -1;
 	private double x2 = -1;
@@ -13,8 +13,11 @@ public class ActionOrdi {
 		while (!b) {
 			b = StdDraw.hasNextKeyTyped();
 		}
-		int n = StdDraw.nextKeyTyped();
-		return n - 48;
+		int touche = StdDraw.nextKeyTyped();
+		if (touche - 48 < 0 || touche - 48 > 9 ) {
+			return touchePresse();
+		}
+		return touche - 48;
 	}
 	
 	public int click(Carte c) {

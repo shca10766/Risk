@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Renfort {
@@ -11,7 +10,7 @@ public class Renfort {
 	}
 	
 	public int renfortTerritoire() {
-		ArrayList al = j.al;
+		ArrayList<Integer> al = j.alTerritoire;
 		int T = al.size();
 		
 		int r = (int) Math.floor(T/3);
@@ -54,12 +53,10 @@ public class Renfort {
 		return r;
 	}
 
-	public void renfort(int n, Carte c, Armee [] tab, String [] tabTerritoire, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+	public void renfort(int n, Carte c, Armee [] tabArmee, String [] tabTerritoire, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
 		int i = j.getIndex();
-		int u;
 		
-		ArrayList al = j.getListeTerritoire();
-		int taille = j.al.size();
+		ArrayList<Integer> al = j.getListeTerritoire();
 		
 		int renfTerr = renfortTerritoire();
 		int renfReg = renfortRegion();
@@ -77,41 +74,31 @@ public class Renfort {
 			}
 			
 			String terri = tabTerritoire[k];
-			Armee a = tab[k];
-			int p = a.puissance();
+			Armee a = tabArmee[k];
 			
-			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, p, i, n, 7, c, a);
-			p = a.puissance();
+			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, i, n, 7, c, a);
 			
-			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, p, i, n, 3, c, a);
-			p = a.puissance();
+			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, i, n, 3, c, a);
 			
-			limiteUnite = ajoutArmee(tab, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, p, i, n, 1, c, a);
-			p = a.puissance();
+			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, i, n, 1, c, a);
+			
 		}
 	}
 	
-	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int l, int p, int i, int n, int m, Carte c, Armee a) {
-		if (l >= m) {
-			int num = 0;
-
-			switch (unite) {
-			case "canon" : num = a.getCanon(); break;
-			case "cavalier" : num =  a.getCavalier(); break;
-			case "soldat" : num = a.getSoldat(); break;
-			}
+	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int limite, int i, int n, int cout, Carte c, Armee a) {
+		if (limite >= cout) {
 			
-			c.afficherMessage("Joueur " + i + " (reste " +l+ " unité(s))", terri + " a une puissance de " + p, "Combien de " + unite + "? (déjà " + num + ")", "");
+			c.afficherMessage("Joueur " + i + " (reste " +limite+ " unité(s))", "Territoire " +terri, "Combien de " + unite + " ajouter?", "");
 			
-			int u = o.touchePresse();
+			int touche = o.touchePresse();
 			
-			if (l >= u*m) {
+			if (limite >= touche*cout) {
 				switch (unite) {
-				case "canon" : a.setCanon(u); break;
-				case "cavalier" : a.setCavalier(u); break;
-				case "soldat" : a.setSoldat(u); break;
+				case "canon" : a.setCanon(touche); break;
+				case "cavalier" : a.setCavalier(touche); break;
+				case "soldat" : a.setSoldat(touche); break;
 				}
-				l = l - m*u;
+				limite = limite - cout*touche;
 			}
 			
 			else {
@@ -121,6 +108,6 @@ public class Renfort {
 			c.AfficherCarte();
 			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
 		}
-		return l;
+		return limite;
 	}
 }

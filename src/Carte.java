@@ -4,16 +4,6 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Carte {
 	
-	private int t1;
-	private int t2;
-
-	
-	public void setT1(int t) {this.t1 = t;}
-	public void setT2(int t) {this.t2 = t;}
-	
-	public int getT1() {return this.t1;}
-	public int getT2() {return this.t2;}
-	
 	public void AfficherCarte() {
 		StdDraw.setCanvasSize(1300, 700);
 		StdDraw.picture(0.5, 0.5, "carte.png");
@@ -131,13 +121,13 @@ public class Carte {
 		else {return 0;}
 	}
 	
-	public void afficherPoint(Armee [] tab, ArrayList al, int c) {
+	public void afficherPoint(Armee [] tabArmee, ArrayList alTerritoire, int c) {
 		
 		int s ; int cn ; int cv ;
-		int l = al.size();
+		int l = alTerritoire.size();
 		for (int i = 0; i < l; i++) {
-			int n = (int) al.get(i);
-			Armee a = tab[n];
+			int n = (int) alTerritoire.get(i);
+			Armee a = tabArmee[n];
 			s = a.getSoldat();
 			cn = a.getCanon();
 			cv = a.getCavalier();

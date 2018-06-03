@@ -2,23 +2,18 @@ import java.util.ArrayList;
 
 public class Joueur {
 
-	public int nombreTerritoire;
-	public ArrayList al;
+	public ArrayList<Integer> alTerritoire;
 	private int i;
 	public int territoireCapture = 0;
 	
 	public Joueur(int index) {this.i = index;}
 	
-	public void setNombreTerritoire(int a) { this.nombreTerritoire += a; }
+	public void initTerritoire(ArrayList al) { this.alTerritoire = al; }
 	
-	public int getNombreTerritoire() { return this.nombreTerritoire; }
-	
-	public void initTerritoire(ArrayList al) { this.al = al; }
-	
-	public ArrayList getListeTerritoire() { return this.al; }
+	public ArrayList getListeTerritoire() { return this.alTerritoire; }
 	
 	public boolean contientListe(int n) {
-		ArrayList al = this.al;
+		ArrayList<Integer> al = this.alTerritoire;
 		if (al.contains(n)) {
 			return true;
 		}
@@ -31,7 +26,7 @@ public class Joueur {
 		boolean indiceTrouve = false;
 		int i = 0;
 		while (!indiceTrouve) {
-			int t = (int) this.al.get(i);
+			int t = (int) this.alTerritoire.get(i);
 			if (k == t) {
 				indiceTrouve = true;
 			}
@@ -39,12 +34,10 @@ public class Joueur {
 				i++;
 			}
 		}
-		this.al.remove(i);
+		this.alTerritoire.remove(i);
 	}
 	
-	public void ajoutListe(int k) {
-		this.al.add(k);
-	}
+	public void ajoutListe(int k) {this.alTerritoire.add(k);}
 
 	public void setTerritoireCapture() {this.territoireCapture++;}
 	

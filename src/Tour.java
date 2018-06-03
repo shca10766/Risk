@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Tour {
@@ -20,17 +19,20 @@ public class Tour {
 			j.reinitTerritoireCapture();
 		}
 		
-		c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Rien");
+		int i = j.getIndex();
+		
+		c.afficherMessage("Joueur " + i + " que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Fin du tour");
 		int choix = o.touchePresse();
 		
 		while (choix != 0) {
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+			c.afficherMessage("Joueur " + i, "Choisissez un de vos territoires", "pour attaquer un territoire voisin", "");
 			
 			if (choix == 1) {
-				Bataille bat = new Bataille();
-				ArrayList vainqueur = bat.bataille(j, j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
+				Bataille bat = new Bataille(j);
+				ArrayList vainqueur = bat.bataille(j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
 				int territoireAttaquant = bat.t1;
 				int territoireAttaque = bat.t2;
 				
@@ -42,12 +44,13 @@ public class Tour {
 			}
 			
 			else if (choix == 2) {
-				Deplacement dep1 = new Deplacement(j1);
+				Deplacement dep1 = new Deplacement(j);
 				dep1.deplacement(c, tabArmee, tab);
 			}
+			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
-			c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Rien");
+			c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Fin du tour");
 			choix = o.touchePresse();	
 		}
 		

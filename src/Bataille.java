@@ -5,84 +5,95 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Bataille {
 	public int t1;
 	public int t2;
+	public Joueur j;
 	
-	public int territoireAttaquant(Carte c, Joueur j, ActionOrdi o) {
-		int i1 = o.click(c);
+	public Bataille(Joueur J) {this.j = J;}
+	
+	public int TerritoireAttaquant(Carte c,  ActionOrdi o) {
+		int t = o.click(c);
 		
-		while (!j.contientListe(i1)) {
-			i1 = o.click(c);
+		while (!j.contientListe(t)) {
+			t = o.click(c);
 		}
-		this.t1 = i1;
-		return i1;
+		this.t1 = t;
+		return t;
 	}
 	
-	public int territoireAttaque(Carte c, Joueur j, ActionOrdi o, String [] tab, String t1) {
-		int i2 = o.click(c);
-		String t2 = tab[i2];
+	public int TerritoireAttaque(Carte c, ActionOrdi o) {
+		int t = o.click(c);
 		
-		boolean b = c.verifCorrespondance(t1, t2);
-		while (!b || j.contientListe(i2)) {
-			i2 = o.click(c);
-			t2 = tab[i2];
-			b = c.verifCorrespondance(t1, t2);
+		while (j.contientListe(t) && t == -1) {
+			t = o.click(c);
 		}
-		this.t2 = i2;
-		return i2;
+		this.t2 = t;
+		return t;
 	}
 
-	public ArrayList bataille(Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, Carte c, String [] tab, Armee [] tabArmee, int n) {
+	public ArrayList<Integer> bataille(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, Carte c, String [] tabTerritoire, Armee [] tabArmee, int n) {
 		ActionOrdi o = new ActionOrdi();
-		int i1 = territoireAttaquant(c, j, o);
-		String t1 = tab[i1];
+		int territoireAttaquant = TerritoireAttaquant(c, o);		
+		int territoireDefense = TerritoireAttaque(c, o);
 		
-		int i2 = territoireAttaque(c, j, o, tab, t1);
-		String t2 = tab[i2];
+		String tAttaquant = tabTerritoire[territoireAttaquant];
+		String tDefense = tabTerritoire[territoireDefense];
+		boolean territoireVoisin = c.verifCorrespondance(tAttaquant, tDefense);
 		
-		int iJ1 = j.getIndex();
-		c.afficherMessage("Joueur " + iJ1, t1 + " attaque " + t2, "", "");
+		while (!territoireVoisin) {
+			territoireDefense = TerritoireAttaque(c, o);
+			tDefense = tabTerritoire[territoireDefense];
+			territoireVoisin = c.verifCorrespondance(tAttaquant, tDefense);
+		}
+		
+		int joueurAttaqaunt = j.getIndex();
+		c.afficherMessage("", "", "", tAttaquant + " attaque " + tDefense);
 		StdDraw.pause(2000);
-		Armee a1 = tabArmee[i1];
-		ArrayList al1 = armeeAttaquant(o, c, tabArmee, j1, j2, j3, j4, j5, j6, n, a1);
+		
+		Armee armeeAttaquant = tabArmee[territoireAttaquant];
+		ArrayList al1 = armeeAttaquant(o, c, tabArmee, j1, j2, j3, j4, j5, j6, n, armeeAttaquant);
 		
 		ArrayList listeAttaquant = recupListe(al1, 0);
 		ArrayList attaquantPuissance = recupListe(al1, 1);
 
-		int iJ2 = joueurDefense (j1, j2, j3, j4, j5, j6, i2);
-		Armee a2 = tabArmee[i2];	
+		int joueurDefense = joueurDefense (j1, j2, j3, j4, j5, j6, territoireDefense);
+		Armee armeeDefense = tabArmee[territoireDefense];	
 		
-		ArrayList al2 = armeeDefense(a2);
+		ArrayList al2 = armeeDefense(armeeDefense);
 		
 		ArrayList listeDefense = recupListe(al2, 0);
 		ArrayList defensePuissance = recupListe(al2, 1);
 		
-		ArrayList vainqueur = combat(listeAttaquant, listeDefense, attaquantPuissance, defensePuissance, a1, a2);
+		c.AfficherCarte();
+		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+		afficherCombat(c, listeAttaquant, listeDefense, attaquantPuissance, defensePuissance);
+		
+		ArrayList vainqueur = combat(listeAttaquant, listeDefense, attaquantPuissance, defensePuissance, armeeAttaquant, armeeDefense);
 		return vainqueur;
 	}
 	
-	public int joueurDefense(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int i) {
-		if (j1.contientListe(i)) {return 1;}
-		else if (j2.contientListe(i)) {return 2;}
-		else if (j3.contientListe(i)) {return 3;}
-		else if (j4.contientListe(i)) {return 4;}
-		else if (j5.contientListe(i)) {return 5;}
+	public int joueurDefense(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int indexTerritoire) {
+		if (j1.contientListe(indexTerritoire)) {return 1;}
+		else if (j2.contientListe(indexTerritoire)) {return 2;}
+		else if (j3.contientListe(indexTerritoire)) {return 3;}
+		else if (j4.contientListe(indexTerritoire)) {return 4;}
+		else if (j5.contientListe(indexTerritoire)) {return 5;}
 		else {return 6;}
 	}
 	
-	public ArrayList armeeAttaquant(ActionOrdi o, Carte c, Armee [] tabArmee, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int n, Armee a1) {
+	public ArrayList armeeAttaquant(ActionOrdi o, Carte c, Armee [] tabArmee, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int n, Armee armeeAttaquant) {
 		int nombreUnite = 0;
 		ArrayList al = new ArrayList();
 		
-		int cn = a1.getCanon();
-		int cv = a1.getCavalier();
-		int s = a1.getSoldat();
+		int cn = armeeAttaquant.getCanon();
+		int cv = armeeAttaquant.getCavalier();
+		int s = armeeAttaquant.getSoldat();
 		
 		int uniteRepos = cn + cv + s;
 		
-		while (nombreUnite == 0 && uniteRepos > 1 ) {
+		if (uniteRepos > 1 ) {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
-			int cvBataille = choixNombreUnite("cavalier", cv, c, o, nombreUnite, 3);
+			int cvBataille = choixNombreUnite("cavalier", cv, c, o, nombreUnite);
 			if (uniteRepos - cvBataille >= 1) {
 				nombreUnite += cvBataille;
 				uniteRepos = uniteRepos - cvBataille;
@@ -97,7 +108,7 @@ public class Bataille {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
-			int sBataille = choixNombreUnite("soldat", s, c, o, nombreUnite, 3);
+			int sBataille = choixNombreUnite("soldat", s, c, o, nombreUnite);
 			if (uniteRepos - sBataille >= 1) {
 				nombreUnite += sBataille;
 				uniteRepos = uniteRepos - sBataille;
@@ -112,7 +123,7 @@ public class Bataille {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
-			int cnBataille = choixNombreUnite("canon", cn, c, o, nombreUnite, 3);
+			int cnBataille = choixNombreUnite("canon", cn, c, o, nombreUnite);
 			if (uniteRepos - cnBataille >= 1) {
 				nombreUnite += cnBataille;
 				uniteRepos = uniteRepos - cnBataille;
@@ -213,21 +224,23 @@ public class Bataille {
 		return liste;
 	}
 	
-	public int choixNombreUnite(String unite, int u, Carte c, ActionOrdi o, int n, int max) {
+	public int choixNombreUnite(String unite, int u, Carte c, ActionOrdi o, int n) {
 		int attaquant = 0;
-		if (u != 0 || max == 2) {
+		if (u != 0) {
 			c.afficherMessage("Combien de " + unite + " dans la bataille ?", "", "", "");
 			attaquant = o.touchePresse();
 			while (attaquant > u) {
 				attaquant = o.touchePresse();
 			}
-		}
-		if (n + attaquant > max) {
-			attaquant = 0;
-			c.afficherMessage("", "Vous dépassez le nombre d'unité", "(maximum "+ max +" unités)", "");
-		}
-		else {
-			c.afficherMessage("", attaquant + " " + unite +"(s) dans la bataille", "", "");
+			if (n + attaquant > 3) {
+				attaquant = 0;
+				c.afficherMessage("", "Vous dépassez le nombre d'unité", "(maximum 3 unités)", "");
+				StdDraw.pause(2000);
+			}
+			else {
+				c.afficherMessage("", attaquant + " " + unite +"(s) dans la bataille", "", "");
+				StdDraw.pause(2000);
+			}
 		}
 		return attaquant;
 	}
@@ -235,6 +248,7 @@ public class Bataille {
 	public ArrayList combat(ArrayList listeAtt, ArrayList listeDef, ArrayList puissanceAtt, ArrayList puissanceDef, Armee a1, Armee a2) {
 		ArrayList vainqueur = new ArrayList();
 		ArrayList defaite = new ArrayList();
+		
 		int s1 = listeAtt.size();
 		int s2 = listeDef.size();
 		int s = Math.min(s1, s2);
@@ -270,13 +284,13 @@ public class Bataille {
 		int p;
 		switch (u) {
 		case "soldat" :
-			p = (int) (6*Math.random()) + 1;
+			p = 1 + (int)(Math.random() * ((6 - 1) + 1));
 			break;
 		case "cavalier" :
-			p = (int) (6*Math.random()) + 2;
+			p = 2 + (int)(Math.random() * ((7 - 2) + 1));
 			break;
 		default :
-			p = (int) (6*Math.random()) + 4;
+			p = 4 + (int)(Math.random() * ((9 - 4) + 1));
 			break;
 		}
 		return p;
@@ -305,7 +319,6 @@ public class Bataille {
 			u1 = (String) al.get(0);
 			p2 = (int) al.get(3);
 			u2 = (String) al.get(2);
-			int max = Math.max(p1, p2);
 			if (p1 < p2) {
 				al.remove(1);
 				al.add(1, p2);
@@ -327,49 +340,163 @@ public class Bataille {
 			u2 = (String) al.get(2);
 			p3 = (int) al.get(5);
 			u3 = (String) al.get(4);
-			int max1 = Math.max(p1, p2);
-			if (p1 < p2) {
-				al.remove(1);
-				al.add(1, p2);
-				
-				al.remove(0);
-				al.add(0, u2);
-				
-				al.remove(3);
-				al.add(3, p1);
-				
-				al.remove(2);
-				al.add(2, u1);
-				int c1 = p1;
-				String s1 = u1;
-				p1 = p2;
-				u1 = u2;
-				p2 = c1;
-				u2 = s1;
-			}
-			int max2 = Math.max(p2, p3);
-			if (p1 < p2) {
-				al.remove(3);
-				al.add(3, p3);
-				al.remove(5);
-				al.add(5, p2);
-				int c2 = p2;
-				String s2 = u2;
-				p2 = p3;
-				u2 = u3;
-				p3 = c2;
-				u3 = s2;
-			}
-			int max3 = Math.max(p1, p3);
-			if (p1 < p3) {
+			if (p3 > p2 && p3 > p1) {
 				al.remove(1);
 				al.add(1, p3);
+				
+				al.remove(0);
+				al.add(0, u3);
+				
 				al.remove(5);
 				al.add(5, p1);
+				
+				al.remove(4);
+				al.add(4, u1);
+				int c1 = p1;
+				String s1 = u1;
+				p1 = p3;
+				u1 = u3;
+				p3 = c1;
+				u3 = s1;
+				if (p2 < p3) {
+					al.remove(3);
+					al.add(3, p3);
+					
+					al.remove(2);
+					al.add(2, u3);
+					
+					al.remove(5);
+					al.add(5, p2);
+					
+					al.remove(4);
+					al.add(4, u2);
+				}
+			}
+			else {
+				if (p1 < p2) {
+					al.remove(1);
+					al.add(1, p2);
+					
+					al.remove(0);
+					al.add(0, u2);
+					
+					al.remove(3);
+					al.add(3, p1);
+					
+					al.remove(2);
+					al.add(2, u1);
+					int c1 = p1;
+					String s1 = u1;
+					p1 = p2;
+					u1 = u2;
+					p2 = c1;
+					u2 = s1;
+				}
+				int max2 = Math.max(p2, p3);
+				if (p2 < p3) {
+					al.remove(3);
+					al.add(3, p3);
+					
+					al.remove(2);
+					al.add(2, u3);
+					
+					al.remove(5);
+					al.add(5, p2);
+					
+					al.remove(4);
+					al.add(4, u2);
+					int c2 = p2;
+					String s2 = u2;
+					p2 = p3;
+					u2 = u3;
+					p3 = c2;
+					u3 = s2;
+				}
+				int max3 = Math.max(p1, p3);
+				if (p1 < p3) {
+					al.remove(1);
+					al.add(1, p3);
+					
+					al.remove(0);
+					al.add(0, u3);
+					
+					al.remove(5);
+					al.add(5, p1);
+					
+					al.remove(4);
+					al.add(4, u1);
+				}
 			}
 			break;
 		}
 		return al;
+	}
+
+	public void afficherCombat(Carte c, ArrayList listeAttaquant, ArrayList listeDefense, ArrayList PuissanceAtt, ArrayList PuissanceDef) {
+		int size1 = listeAttaquant.size();
+		int size2 = listeDefense.size();
+		
+		String att1, att2, att3;
+		String def1, def2;
+		
+		int pAtt1, pAtt2, pAtt3;
+		int pDef1, pDef2;
+		
+		if (size2 == 2) {
+			att1 = (String) listeAttaquant.get(0);
+			att2 = (String) listeAttaquant.get(1);
+			def1 = (String) listeDefense.get(0);
+			def2 = (String) listeDefense.get(1);
+			
+			pAtt1 = (int) PuissanceAtt.get(0);
+			pAtt2 = (int) PuissanceAtt.get(1);
+			pDef1 = (int) PuissanceDef.get(0);
+			pDef2 = (int) PuissanceDef.get(1);
+			
+			if (size1 == 2) {
+				
+				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ") contre " + def2  + " (" + pDef2 + ")", "", "");
+				StdDraw.pause(10000);
+			}
+			else {
+				att3 = (String) listeAttaquant.get(2);
+				pAtt3 = (int) PuissanceAtt.get(2);
+				
+				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ") contre " + def2  + " (" + pDef2 + ")", att3 + " (" + pAtt3 + ")", "");
+				StdDraw.pause(10000);
+			}
+		}
+		else {
+			att1 = (String) listeAttaquant.get(0);
+			def1 = (String) listeDefense.get(0);
+			
+			pAtt1 = (int) PuissanceAtt.get(0);
+			pDef1 = (int) PuissanceDef.get(0);
+			
+			if (size1 == 1) {
+				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", "", "", "");
+				StdDraw.pause(10000);
+			}
+			else if (size1 == 2) {
+				att2 = (String) listeAttaquant.get(1);
+				pAtt2 = (int) PuissanceAtt.get(1);
+				
+				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ")", "", "");
+				StdDraw.pause(10000);
+			}
+			
+			else {
+				att2 = (String) listeAttaquant.get(1);
+				pAtt2 = (int) PuissanceAtt.get(1);
+				
+				att3 = (String) listeAttaquant.get(2);
+				pAtt3 = (int) PuissanceAtt.get(2);
+				
+				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ")", att3 + " (" + pAtt3 + ")", "");
+				StdDraw.pause(10000);
+			}
+		}
+		
 	}
 
 }
