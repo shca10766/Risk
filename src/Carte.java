@@ -121,19 +121,19 @@ public class Carte {
 		else {return 0;}
 	}
 	
-	public void afficherPoint(Armee [] tabArmee, ArrayList alTerritoire, int c) {
+	public void afficherPoint(Armee [] tabArmee, ArrayList alTerritoire, int i) {
 		
 		int s ; int cn ; int cv ;
 		int l = alTerritoire.size();
-		for (int i = 0; i < l; i++) {
-			int n = (int) alTerritoire.get(i);
+		for (int k = 0; k < l; k++) {
+			int n = (int) alTerritoire.get(k);
 			Armee a = tabArmee[n];
 			s = a.getSoldat();
 			cn = a.getCanon();
 			cv = a.getCavalier();
 			int x = xCorrespondance(n);
 			int y = yCorrespondance(n);
-			switch (c) {
+			switch (i) {
 				case 1 :
 					StdDraw.setPenColor(StdDraw.RED);
 					break;

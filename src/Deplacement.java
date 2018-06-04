@@ -42,27 +42,31 @@ public class Deplacement {
 		int s = a1.getSoldat();
 		int p = a1.puissance();
 		
-		c.afficherMessage("Combien de canon deplacer?", "Combien de cavalier deplacer?", "Combien de soldat deplacer", "");
+		int cn0 = a1.getCanon0Mouvement();
+		int cv0 = a1.getCavalier0Mouvement();
+		int s0 = a1.getSoldat0Mouvement();
+		
+		ArrayList armeeDeplace = new ArrayList();
+		
+		c.afficherMessage("Combien de canon deplacer? (" + cn0 + " au repos)", "Combien de cavalier deplacer? (" + cv0 + " au repos)", "Combien de soldat deplacer?  (" + s0 + " au repos)", "");
 		
 		int cnDep = o.touchePresse();
-		if ((cnDep <= cn) && (p - cnDep > 0)) {
-			a1.setCanon(-cnDep);
-			a2.setCanon(cnDep);
+		if ((cnDep <= cn) && (p - cnDep > 0) && (cn - cn0) >= cnDep) {
+			armeeDeplace.add("canon");
 		}
-		p = a1.puissance();
+		p = p - cnDep;
 		
 		int cvDep = o.touchePresse();
-		if ((cvDep <= cv) && (p - cvDep > 0)) {
-			a1.setCavalier(-cvDep);
-			a2.setCavalier(cvDep);
+		if ((cvDep <= cv) && (p - cvDep > 0) && (cv - cv0) >= cvDep) {
+			armeeDeplace.add("cavalier");
 		}
-		p = a1.puissance();
+		p = p - cvDep;
 		
 		int sDep = o.touchePresse();
-		if ((sDep <= s) && (p - sDep > 0)) {
-			a1.setSoldat(-sDep);
-			a2.setSoldat(sDep);
+		if ((sDep <= s) && (p - sDep > 0) && (s - s0) >= sDep) {
+			armeeDeplace.add("soldat");
 		}
+		listeDeplace(armeeDeplace, a2, a1);
 	}
 	
 	public int choixTerritoire(ActionOrdi o, Carte c) {
@@ -104,6 +108,13 @@ public class Deplacement {
 	}
 	
 	public void listeDeplace(ArrayList al, Armee a1, Armee a2) {
+		int cv1 = a2.getCavalier1Mouvement();
+		int cv2 = a2.getCavalier2Mouvement();
+		int s1 = a2.getSoldat1Mouvement();
+		
+		int cv = a2.getCavalier();
+		int so = a2.getSoldat();
+		
 		int s = al.size();
 		for (int i = 0; i < s; i++) {
 			String u = (String) al.get(i);
@@ -111,16 +122,41 @@ public class Deplacement {
 			case "soldat":
 				a1.setSoldat(1);
 				a2.setSoldat(-1);
+				/*if (s1 == 0) {
+					a1.setSoldat1(1);
+				}
+				else {
+					a2.setSoldat1(-1);
+					a1.setSoldat0(1);
+				}*/
 				break;
 			case "cavalier" :
 				a1.setCavalier(1);
 				a2.setCavalier(-1);
+				/*if (cv2 == 0 && cv1 == 0) {
+					a1.setCavalier2(1);
+				}
+				else if (cv2 != 0) {
+					a2.setCavalier2(-1);
+					a1.setCavalier1(1);
+				}
+				else {
+					a2.setCavalier1(-1);
+					a1.setCavalier0(1);
+				}*/
 				break;
 			default :
 				a1.setCanon(1);
 				a2.setCanon(-1);
+				//a1.setCanon0(1);
 				break;
 			}
+			cv1 = a2.getCavalier1Mouvement();
+			cv2 = a2.getCavalier2Mouvement();
+			s1 = a2.getSoldat1Mouvement();
+			
+			cv = a2.getCavalier();
+			so = a2.getSoldat();
 		}
 	}
 }

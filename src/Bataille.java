@@ -87,13 +87,17 @@ public class Bataille {
 		int cv = armeeAttaquant.getCavalier();
 		int s = armeeAttaquant.getSoldat();
 		
+		int cn0 = armeeAttaquant.getCanon0Mouvement();
+		int cv0 = armeeAttaquant.getCavalier0Mouvement();
+		int s0 = armeeAttaquant.getSoldat0Mouvement();
+		
 		int uniteRepos = cn + cv + s;
 		
-		if (uniteRepos > 1 ) {
+		if (uniteRepos > 1 && (cn0 + cv0 + s0 != cn + cv + s)) {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
-			int cvBataille = choixNombreUnite("cavalier", cv, c, o, nombreUnite);
+			int cvBataille = choixNombreUnite("cavalier", cv, cv0, c, o, nombreUnite);
 			if (uniteRepos - cvBataille >= 1) {
 				nombreUnite += cvBataille;
 				uniteRepos = uniteRepos - cvBataille;
@@ -108,7 +112,7 @@ public class Bataille {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
-			int sBataille = choixNombreUnite("soldat", s, c, o, nombreUnite);
+			int sBataille = choixNombreUnite("soldat", s, s0, c, o, nombreUnite);
 			if (uniteRepos - sBataille >= 1) {
 				nombreUnite += sBataille;
 				uniteRepos = uniteRepos - sBataille;
@@ -123,7 +127,7 @@ public class Bataille {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
-			int cnBataille = choixNombreUnite("canon", cn, c, o, nombreUnite);
+			int cnBataille = choixNombreUnite("canon", cn, cn0, c, o, nombreUnite);
 			if (uniteRepos - cnBataille >= 1) {
 				nombreUnite += cnBataille;
 				uniteRepos = uniteRepos - cnBataille;
@@ -224,21 +228,21 @@ public class Bataille {
 		return liste;
 	}
 	
-	public int choixNombreUnite(String unite, int u, Carte c, ActionOrdi o, int n) {
+	public int choixNombreUnite(String unite, int u, int u0, Carte c, ActionOrdi o, int n) {
 		int attaquant = 0;
-		if (u != 0) {
-			c.afficherMessage("Combien de " + unite + " dans la bataille ?", "", "", "");
+		if (u != 0 && u0 != u) {
+			c.afficherMessage("Combien de " + unite + " dans la bataille ?", u0 + " au repos", "", "");
 			attaquant = o.touchePresse();
 			while (attaquant > u) {
 				attaquant = o.touchePresse();
 			}
-			if (n + attaquant > 3) {
+			if (n + attaquant > 3 || u0 > attaquant) {
 				attaquant = 0;
-				c.afficherMessage("", "Vous dépassez le nombre d'unité", "(maximum 3 unités)", "");
+				c.afficherMessage("", "", "Armée d'attaque impossible", "");
 				StdDraw.pause(2000);
 			}
 			else {
-				c.afficherMessage("", attaquant + " " + unite +"(s) dans la bataille", "", "");
+				c.afficherMessage("", "", attaquant + " " + unite +"(s) dans la bataille", "");
 				StdDraw.pause(2000);
 			}
 		}

@@ -28,9 +28,9 @@ public class Tour {
 			
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
-			c.afficherMessage("Joueur " + i, "Choisissez un de vos territoires", "pour attaquer un territoire voisin", "");
 			
 			if (choix == 1) {
+				c.afficherMessage("Joueur " + i, "Choisissez un de vos territoires", "pour attaquer un territoire voisin", "");
 				Bataille bat = new Bataille(j);
 				ArrayList vainqueur = bat.bataille(j1, j2, j3, j4, j5, j6, c, tab, tabArmee, n);
 				int territoireAttaquant = bat.t1;
@@ -52,6 +52,11 @@ public class Tour {
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Fin du tour");
 			choix = o.touchePresse();	
+		}
+		
+		for (int j = 0; j < tabArmee.length; j++) {
+			Armee a = tabArmee[j];
+			a.reinitMouvement();
 		}
 		
 		c.AfficherCarte();
