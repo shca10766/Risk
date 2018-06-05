@@ -3,7 +3,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Tour {
 
-	Joueur j;
+	private Joueur j;
 	
 	public Tour(Joueur J) {
 		this.j = J;

@@ -5,7 +5,7 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Bataille {
 	public int t1;
 	public int t2;
-	public Joueur j;
+	private Joueur j;
 	
 	public Bataille(Joueur J) {this.j = J;}
 	

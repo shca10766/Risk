@@ -3,7 +3,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Renfort {
 
-	public Joueur j;
+	private Joueur j;
 	
 	public Renfort(Joueur J) {
 		this.j = J;

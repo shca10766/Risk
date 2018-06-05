@@ -3,7 +3,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Initialisation {
 
-	public int entier;
+	private int entier;
 	
 	public Initialisation(int n) {
 		this.entier = n;

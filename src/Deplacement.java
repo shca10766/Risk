@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Deplacement {
 
-	public ArrayList al;
-	public Joueur j;
-	public int t1;
-	public int t2;
+	private ArrayList al;
+	private Joueur j;
+	private int t1;
+	private int t2;
 	
 	// Initialisation d'un déplacement après une bataille
 	public Deplacement(Joueur J, ArrayList L, int T1, int T2) {
