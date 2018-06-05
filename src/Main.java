@@ -10,7 +10,7 @@ public class Main {
 				"Moyen Orient", "Inde", "Siam", "Chine", "Afghanistan", "Mongolie", "Japon", "Oural", "Irkoutsk", "Kamchatka", "Sibérie", "Yakoutsk",
 				"Ukraine", "Scandinavie", "Nord de l'Europe", "Sud de l'Europe", "Ouest de l'Europe", "Islande", "Grande Bretagne"			
 		};
-		
+		// Création de toute les armées
 		Armee [] tabArmee = new Armee[42];
 		
 		Armee a0 = new Armee(); tabArmee[0] = a0;
@@ -56,6 +56,7 @@ public class Main {
 		Armee a40 = new Armee(); tabArmee[40] = a40;
 		Armee a41 = new Armee(); tabArmee[41] = a41;
 		
+		// Choix du nombre de joueurs
 		Carte c = new Carte();
 		c.AfficherCarte();
 		c.afficherMessage("Combien de joueurs êtes vous ?", "Choisir un chiffre entre 2 et 6", "", "");
@@ -64,6 +65,7 @@ public class Main {
 		
 		int n = o.touchePresse();
 		
+		// initialisation des joueurs
 		Joueur j1 = new Joueur(1);
 		Joueur j2 = new Joueur(2);
 		Joueur j3 = new Joueur(3);
@@ -73,11 +75,13 @@ public class Main {
 		
 		Initialisation init = new Initialisation(n);
 		
+		// Initialisation des territoires
 		init.initialisationTerritoire(j1, j2, j3, j4, j5, j6);
 		
 		c.AfficherCarte();
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);	
 		
+		// Initialisation de l'armée
 		switch (n) {
 		case 2:
 			c.afficherMessage("Joueur 1", "", "", "");
@@ -139,7 +143,7 @@ public class Main {
 		boolean V5 = false;
 		boolean V6 = false;
 		
-		
+		// Partie en cours jusqu'à la victoire d'un des joueurs
 		while (!V1 && !V2 && !V3 && !V4 && !V5 && !V6) {
 			Tour T1 = new Tour(j1);
 			Tour T2 = new Tour(j2);
@@ -153,6 +157,7 @@ public class Main {
 				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 				V1 = j1.verifVictoire();
 				
+				// SI le joueur 1 n'a pas gagné
 				if (!V1) {
 					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V2 = j2.verifVictoire();
@@ -240,7 +245,25 @@ public class Main {
 		}
 		c.AfficherCarte();
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
-		c.afficherMessage("Victoire", "", "", "");
+		// Cas du joueur gagnant
+		if (V1) {
+			c.afficherMessage("Victoire du Joueur 1", "", "", "");
+		}
+		else if (V2) {
+			c.afficherMessage("Victoire du joueur 2", "", "", "");
+		}
+		else if (V3) {
+			c.afficherMessage("Victoire du joueur 3", "", "", "");
+		}
+		else if (V4) {
+			c.afficherMessage("Victoire du joueur 4", "", "", "");
+		}
+		else if (V5) {
+			c.afficherMessage("Victoire du joueur 5", "", "", "");
+		}
+		else {
+			c.afficherMessage("Victoire du joueur 6", "", "", "");
+		}
 		
 	}
 	

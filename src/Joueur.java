@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Joueur {
 
-	public ArrayList<Integer> alTerritoire;
-	private int i;
+	public ArrayList<Integer> alTerritoire; // liste des territoires possédés par le joueur
+	private int i; // index du joueur
 	public int territoireCapture = 0;
 	
 	public Joueur(int index) {this.i = index;}
@@ -12,6 +12,7 @@ public class Joueur {
 	
 	public ArrayList getListeTerritoire() { return this.alTerritoire; }
 	
+	// Vérifier que le territoire sur lequel le joueur click est possédé par ce joueur
 	public boolean contientListe(int n) {
 		ArrayList<Integer> al = this.alTerritoire;
 		if (al.contains(n)) {
@@ -22,6 +23,7 @@ public class Joueur {
 
 	public int getIndex() {return this.i;}
 
+	// Enlever ce territoire de la liste du joueur
 	public void removeListe(int k) {
 		boolean indiceTrouve = false;
 		int i = 0;
@@ -37,14 +39,17 @@ public class Joueur {
 		this.alTerritoire.remove(i);
 	}
 	
+	// Ajouter ce territoire dans la liste du joueur
 	public void ajoutListe(int k) {this.alTerritoire.add(k);}
 
+	// Ajouter un territoire capturé par le joueur
 	public void setTerritoireCapture() {this.territoireCapture++;}
 	
 	public void reinitTerritoireCapture() {this.territoireCapture = 0;}
 	
 	public int getTerritoireCapture() {return this.territoireCapture;}
 
+	// Vérifier que le joueur possède tous les territoires pour obtenir la condition de victoire
 	public boolean verifVictoire() {
 		for (int i = 0; i < 42; i++) {
 			if (!contientListe(i)) {

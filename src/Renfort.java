@@ -9,6 +9,7 @@ public class Renfort {
 		this.j = J;
 	}
 	
+	// Nombre de renfort en fonction du nombre de territoire possédés par le joueur
 	public int renfortTerritoire() {
 		ArrayList<Integer> al = j.alTerritoire;
 		int T = al.size();
@@ -17,6 +18,7 @@ public class Renfort {
 		return r;
 	}
 	
+	// Nombre de renfort en fonction du nombre de région contrôlée et le nombre de territoire dans ces régions
 	public int renfortRegion() {
 		int N = 0;
 		if (controleRegion(0, 8)) {N = N + 9;}
@@ -30,6 +32,8 @@ public class Renfort {
 		return r;
 	}
 	
+	// Vérification si la région est contrôlée par le joueur
+	// a et b donnent l'intervalle des indices des territoires de la région correspondante
 	public boolean controleRegion(int a, int b) {
 		for (int i = a; i <= b; i++) {
 			if (!j.contientListe(i)) {
@@ -39,14 +43,15 @@ public class Renfort {
 		return true;
 	}
 	
+	// Nombre de renfort en fonction du nombre de territoires capturés au tour précédent
 	public int renfortTerritoireCapture() {
 		int t = j.getTerritoireCapture();
 		int r = 0;
 		
 		for (int i = 0; i <= t; i++) {
 			int p = (int) Math.random();
-			if (p < 0.5) {
-				r++;
+			if (p < 0.5) { // probabilité de 50% d'avoir un renfort par territoire capturé
+				r++; 
 			}
 		}
 		
@@ -62,13 +67,16 @@ public class Renfort {
 		int renfReg = renfortRegion();
 		int renfCapt = renfortTerritoireCapture();
 		
+		// Nombre d'unité à placer pendant les renforts
 		int limiteUnite = renfTerr + renfReg + renfCapt;
 		
+		// Tant que toutes les unités ne sont pas placées
 		while (limiteUnite != 0) {
 			
 			ActionOrdi o = new ActionOrdi();
 			int k = o.click(c);
 			
+			// Vérifier que le joueur click sur un de ses territoires
 			while (!j.contientListe(k)) {
 				k = o.click(c);
 			}
@@ -86,9 +94,9 @@ public class Renfort {
 	}
 	
 	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int limite, int i, int n, int cout, Carte c, Armee a) {
-		if (limite >= cout) {
+		if (limite >= cout) { // Si le nombre d'unité restantes à placer est supérieure ou égale au coût du type de l'unité
 			
-			c.afficherMessage("Joueur " + i + " (reste " +limite+ " unité(s))", "Territoire " +terri, "Combien de " + unite + " ajouter?", "");
+			c.afficherMessage("Joueur " + i + " insérer vos renforts", "(reste " +limite+ " unité(s))", "Territoire " +terri, "Combien de " + unite + " ajouter?");
 			
 			int touche = o.touchePresse();
 			

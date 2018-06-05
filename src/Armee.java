@@ -36,10 +36,12 @@ public class Armee {
 	
 	public int getCanon() {return this.nombreCanon;}
 	
+	// Nombre de cavalier à qui il reste deux mouvements dans ce tour
 	public int getCavalier2Mouvement() {return this.nombreCavalier2;}
 	public int getCavalier1Mouvement() {return this.nombreCavalier1;}
 	public int getCavalier0Mouvement() {return this.nombreCavalier0;}
 	
+	// Modification du nombre de cavalier à qui il reste deux mouvements
 	public void setCavalier2(int m) {this.nombreCavalier2 = this.nombreCavalier2 + m;}
 	public void setCavalier1(int m) {this.nombreCavalier1 = this.nombreCavalier1 + m;}
 	public void setCavalier0(int m) {this.nombreCavalier0 = this.nombreCavalier0 + m;}
@@ -54,6 +56,7 @@ public class Armee {
 	
 	public void setCanon0(int m) {this.nombreCanon0 = this.nombreCanon0 + m;}
 	
+	// Après chaque tour réinitialisation des mouvement par tour de toutes les unités
 	public void reinitMouvement() {
 		this.nombreCanon0 = 0;
 		

@@ -9,10 +9,11 @@ public class Bataille {
 	
 	public Bataille(Joueur J) {this.j = J;}
 	
+	// Territoire attaquant
 	public int TerritoireAttaquant(Carte c,  ActionOrdi o) {
 		int t = o.click(c);
 		
-		while (!j.contientListe(t)) {
+		while (!j.contientListe(t)) { // Vérifier que le territoire attaquant est possédé par le joueur
 			t = o.click(c);
 		}
 		this.t1 = t;
@@ -22,7 +23,7 @@ public class Bataille {
 	public int TerritoireAttaque(Carte c, ActionOrdi o) {
 		int t = o.click(c);
 		
-		while (j.contientListe(t) && t == -1) {
+		while (j.contientListe(t) && t == -1) { // Vérifier que le territoire attaqué n'est pas possédé par le joueur
 			t = o.click(c);
 		}
 		this.t2 = t;
@@ -38,6 +39,7 @@ public class Bataille {
 		String tDefense = tabTerritoire[territoireDefense];
 		boolean territoireVoisin = c.verifCorrespondance(tAttaquant, tDefense);
 		
+		// Vérifier que les deux territoires sont voisins
 		while (!territoireVoisin) {
 			territoireDefense = TerritoireAttaque(c, o);
 			tDefense = tabTerritoire[territoireDefense];
@@ -49,16 +51,21 @@ public class Bataille {
 		StdDraw.pause(2000);
 		
 		Armee armeeAttaquant = tabArmee[territoireAttaquant];
+		// Création de l'armée attaquante
 		ArrayList al1 = armeeAttaquant(o, c, tabArmee, j1, j2, j3, j4, j5, j6, n, armeeAttaquant);
 		
-		ArrayList listeAttaquant = recupListe(al1, 0);
-		ArrayList attaquantPuissance = recupListe(al1, 1);
+		// Séparation des types d'unité et de leur puissance d'attaque
+		ArrayList listeAttaquant = recupListe(al1, 0); // Que des variables de type String
+		ArrayList attaquantPuissance = recupListe(al1, 1); // Que des variables du type int
 
+		// Déterminer l'index du joueur attaqué
 		int joueurDefense = joueurDefense (j1, j2, j3, j4, j5, j6, territoireDefense);
 		Armee armeeDefense = tabArmee[territoireDefense];	
 		
+		// Création de l'armée défensive
 		ArrayList al2 = armeeDefense(armeeDefense);
 		
+		// Séparation des types d'unité et de leur puissance d'attaque
 		ArrayList listeDefense = recupListe(al2, 0);
 		ArrayList defensePuissance = recupListe(al2, 1);
 		
@@ -66,10 +73,12 @@ public class Bataille {
 		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 		afficherCombat(c, listeAttaquant, listeDefense, attaquantPuissance, defensePuissance);
 		
+		// Réalise le combat entre les deux armées
 		ArrayList vainqueur = combat(listeAttaquant, listeDefense, attaquantPuissance, defensePuissance, armeeAttaquant, armeeDefense);
 		return vainqueur;
 	}
 	
+	// Déterminer quel joueur possède le territoire correspondant
 	public int joueurDefense(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int indexTerritoire) {
 		if (j1.contientListe(indexTerritoire)) {return 1;}
 		else if (j2.contientListe(indexTerritoire)) {return 2;}
@@ -79,6 +88,7 @@ public class Bataille {
 		else {return 6;}
 	}
 	
+	// Création de l'armée attaquante
 	public ArrayList armeeAttaquant(ActionOrdi o, Carte c, Armee [] tabArmee, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int n, Armee armeeAttaquant) {
 		int nombreUnite = 0;
 		ArrayList al = new ArrayList();
@@ -87,21 +97,27 @@ public class Bataille {
 		int cv = armeeAttaquant.getCavalier();
 		int s = armeeAttaquant.getSoldat();
 		
+		// Toutes les unités ne pouvant pas se déplacer
 		int cn0 = armeeAttaquant.getCanon0Mouvement();
 		int cv0 = armeeAttaquant.getCavalier0Mouvement();
 		int s0 = armeeAttaquant.getSoldat0Mouvement();
 		
 		int uniteRepos = cn + cv + s;
 		
+		// Si il reste une unité dans le territoire et qu'il reste des unités qui peuvent se déplacer
 		if (uniteRepos > 1 && (cn0 + cv0 + s0 != cn + cv + s)) {
 			c.AfficherCarte();
 			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 			
+			// Ordre pour lequel on demande le nombre d'attaquant pour chaque unité donne l'ordre de la priorité d'Attaque
+			
 			int cvBataille = choixNombreUnite("cavalier", cv, cv0, c, o, nombreUnite);
+			// Si l'on ne prend pas d'unité qui soit au repos
 			if (uniteRepos - cvBataille >= 1) {
 				nombreUnite += cvBataille;
 				uniteRepos = uniteRepos - cvBataille;
 				
+				// On ajoute pour chaque unité choisie son type et sa puissance d'attaque
 				for (int k1 = 0; k1 < cvBataille; k1++) {
 					al.add((String) "cavalier");
 					int p = puissanceUnite("cavalier");
@@ -138,7 +154,7 @@ public class Bataille {
 					al.add((int) p);
 				}
 			}
-			
+			// Trier la liste de l'armée attaquante en fonction de la puissance d'attaque de l'unité
 			al = ordrePuissance(al);
 		}
 		return al;
@@ -152,8 +168,9 @@ public class Bataille {
 		int cv = a1.getCavalier();
 		int s = a1.getSoldat();
 		
+		// Ajout d'abord de soldat s'ils existent
 		int sBataille = 0;
-		if (s < 2) {
+		if (s < 2) { // Si il y a moins de deux soldats
 			sBataille = s;
 		}
 		else {
@@ -161,18 +178,20 @@ public class Bataille {
 		}
 		nombreUnite += sBataille;	
 		
+		// On ajoute pour chaque unité choisie son type et sa puissance d'attaque
 		for (int k2 = 0; k2 < sBataille; k2++) {
 			al.add("soldat");
 			int p = puissanceUnite("soldat");
 			al.add(p);
 		}
 		
-		if (nombreUnite == 2) {
+		if (nombreUnite == 2) { // Si on a notre nombre de défenseur maximum (2)
 			al = ordrePuissance(al);
 			return al;
 		}			
 		
 		int cnBataille = 0;
+		// Si le nombre de défenseur ne dépasse pas 2
 		if (nombreUnite + cn < 2) {
 			cnBataille = cn;
 		}
@@ -211,6 +230,7 @@ public class Bataille {
 		return al;
 	}
 	
+	// Sépare dans une liste de deux type (String et int) un type particulier (int ou String)
 	public ArrayList recupListe(ArrayList al, int i) {
 		ArrayList liste = new ArrayList();
 		if (i == 0) {
@@ -230,13 +250,13 @@ public class Bataille {
 	
 	public int choixNombreUnite(String unite, int u, int u0, Carte c, ActionOrdi o, int n) {
 		int attaquant = 0;
-		if (u != 0 && u0 != u) {
+		if (u != 0 && u0 != u) { // Si l'unité est présente dans le territoire et que si elle existe elles puissent se déplacer
 			c.afficherMessage("Combien de " + unite + " dans la bataille ?", u0 + " au repos", "", "");
 			attaquant = o.touchePresse();
 			while (attaquant > u) {
 				attaquant = o.touchePresse();
 			}
-			if (n + attaquant > 3 || u0 > attaquant) {
+			if (n + attaquant > 3 || u0 > attaquant) { 
 				attaquant = 0;
 				c.afficherMessage("", "", "Armée d'attaque impossible", "");
 				StdDraw.pause(2000);
@@ -255,13 +275,13 @@ public class Bataille {
 		
 		int s1 = listeAtt.size();
 		int s2 = listeDef.size();
-		int s = Math.min(s1, s2);
+		int s = Math.min(s1, s2); // Récupère la taille minimum des deux listes pour les faire combattre
 		for (int k = 0; k < s; k++) {
 			String u1 = (String) listeAtt.get(k);
 			String u2 = (String) listeDef.get(k);
 			int p1 = (int) puissanceAtt.get(k);
 			int p2 = (int) puissanceDef.get(k);
-			if (p1 <= p2) {
+			if (p1 <= p2) { // Si l'unité attaquante a une puissance d'attaque inférieure ou égale au défenseur
 				uniteDetruite(u1, a1);
 			}
 			else {
@@ -269,6 +289,7 @@ public class Bataille {
 				vainqueur.add(u1);
 			}
 		}
+		//Si toutes les unités ennemies sont détruites on crée la liste des unités se déplaceant
 		int puissanceArmee2 = a2.puissance();
 		if (puissanceArmee2 == 0) {
 			if (s1 - s > 0) {
@@ -284,6 +305,7 @@ public class Bataille {
 		}
 	}
 	
+	// Assimiler aléatoirement une puissance d'attaque en fonction du type d'unité
 	public int puissanceUnite(String u) {
 		int p;
 		switch (u) {
@@ -300,6 +322,7 @@ public class Bataille {
 		return p;
 	}
 
+	// Détruire une unité après un combat
 	public void uniteDetruite(String u, Armee a) {
 		switch(u) {
 		case "soldat" :
@@ -313,6 +336,7 @@ public class Bataille {
 		}
 	}
 
+	// Trier la liste en fonction de la puissance d'attaque des unités
 	public ArrayList ordrePuissance(ArrayList al) {
 		int p1, p2, p3;
 		String u1, u2, u3;
@@ -460,14 +484,14 @@ public class Bataille {
 			if (size1 == 2) {
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ") contre " + def2  + " (" + pDef2 + ")", "", "");
-				StdDraw.pause(10000);
+				StdDraw.pause(5000);
 			}
 			else {
 				att3 = (String) listeAttaquant.get(2);
 				pAtt3 = (int) PuissanceAtt.get(2);
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ") contre " + def2  + " (" + pDef2 + ")", att3 + " (" + pAtt3 + ")", "");
-				StdDraw.pause(10000);
+				StdDraw.pause(5000);
 			}
 		}
 		else {
@@ -479,14 +503,14 @@ public class Bataille {
 			
 			if (size1 == 1) {
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", "", "", "");
-				StdDraw.pause(10000);
+				StdDraw.pause(5000);
 			}
 			else if (size1 == 2) {
 				att2 = (String) listeAttaquant.get(1);
 				pAtt2 = (int) PuissanceAtt.get(1);
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ")", "", "");
-				StdDraw.pause(10000);
+				StdDraw.pause(5000);
 			}
 			
 			else {
@@ -497,7 +521,7 @@ public class Bataille {
 				pAtt3 = (int) PuissanceAtt.get(2);
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ")", att3 + " (" + pAtt3 + ")", "");
-				StdDraw.pause(10000);
+				StdDraw.pause(5000);
 			}
 		}
 		

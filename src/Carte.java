@@ -5,12 +5,13 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Carte {
 	
 	public void AfficherCarte() {
-		StdDraw.setCanvasSize(1300, 700);
-		StdDraw.picture(0.5, 0.5, "carte.png");
-		StdDraw.setXscale(0,1300);							
-		StdDraw.setYscale(700,0);
+		StdDraw.setCanvasSize(1300, 700); // échelle du cadre
+		StdDraw.picture(0.5, 0.5, "carte.png"); // placement de l'image
+		StdDraw.setXscale(0,1300);	// échelle de x
+		StdDraw.setYscale(700,0); // échelle de y
 	}
 	
+	// Affichage des messages à droite
 	public void afficherMessage(String l1, String l2, String l3, String l4) {
 		StdDraw.setPenColor(StdDraw.BLACK);
 		StdDraw.text(1140, 200, l1);
@@ -19,6 +20,7 @@ public class Carte {
 		StdDraw.text(1140, 290, l4);
 	}
 	
+	// Coordonnée x des points 
 	public int xCorrespondance(int n) {
 		if (n == 0) {return 80;}
 		else if (n == 1) {return 150;}
@@ -70,6 +72,7 @@ public class Carte {
 		else {return 0;}
 	}
 	
+	// Coordonnée y des points
 	public int yCorrespondance(int n) {
 		if (n == 0) {return 110;}
 		else if (n == 1) {return 90;}
@@ -124,15 +127,16 @@ public class Carte {
 	public void afficherPoint(Armee [] tabArmee, ArrayList alTerritoire, int i) {
 		
 		int s ; int cn ; int cv ;
-		int l = alTerritoire.size();
+		int l = alTerritoire.size(); // Taille de la liste des territoires possédés par le joueur i
 		for (int k = 0; k < l; k++) {
 			int n = (int) alTerritoire.get(k);
-			Armee a = tabArmee[n];
-			s = a.getSoldat();
+			Armee a = tabArmee[n]; // Donnée de l'armée du territoire d'indice k
+			s = a.getSoldat(); 
 			cn = a.getCanon();
 			cv = a.getCavalier();
 			int x = xCorrespondance(n);
 			int y = yCorrespondance(n);
+			// Couleur du point en fonction du joueur i
 			switch (i) {
 				case 1 :
 					StdDraw.setPenColor(StdDraw.RED);
@@ -161,10 +165,11 @@ public class Carte {
 			
 			Font font = new Font("Arial", Font.BOLD, 15);
 			StdDraw.setFont(font);
-			StdDraw.text(x, y + 15, s+":"+cv+":"+cn);
+			StdDraw.text(x, y + 15, s+":"+cv+":"+cn); // Affichage des unités par territoires
 		}
 	}
-			
+	
+	// Référence du territoire selon les coordonnées du click
 	public int clickCorrespondance(double x, double y) {
 		
 		// Europe
@@ -224,6 +229,7 @@ public class Carte {
 		else {return -1;}
 	}
 	
+	// Vérification des pays voisins
 	public boolean verifCorrespondance(String t1, String t2) {
 		switch(t1) {
 			case "Alaska":
