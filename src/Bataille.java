@@ -473,8 +473,6 @@ public class Bataille {
 		int size1 = listeAttaquant.size();
 		int size2 = listeDefense.size();
 		
-		System.out.println(size1 + " " + size2);
-		
 		String att1, att2, att3;
 		String def1, def2;
 		
