@@ -10,12 +10,21 @@ public class Bataille {
 	public Bataille(Joueur J) {this.j = J;}
 	
 	// Territoire attaquant
-	public int TerritoireAttaquant(Carte c,  ActionOrdi o) {
+	public int TerritoireAttaquant(Carte c,  ActionOrdi o, Armee [] tabArmee) {
 		int t = o.click(c);
 		
-		while (!j.contientListe(t)) { // Vérifier que le territoire attaquant est possédé par le joueur
-			t = o.click(c);
+		Armee a = new Armee();
+		if (t != -1 ) {
+			a = tabArmee[t];
 		}
+		
+		while (!j.contientListe(t) || a.puissance() <= 1) { // Vérifier que le territoire attaquant est possédé par le joueur
+			t = o.click(c);
+			if (t != -1 ) {
+				a = tabArmee[t];
+			}
+		}
+		
 		this.t1 = t;
 		return t;
 	}
@@ -32,7 +41,7 @@ public class Bataille {
 
 	public ArrayList<Integer> bataille(Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, Carte c, String [] tabTerritoire, Armee [] tabArmee, int n) {
 		ActionOrdi o = new ActionOrdi();
-		int territoireAttaquant = TerritoireAttaquant(c, o);		
+		int territoireAttaquant = TerritoireAttaquant(c, o, tabArmee);		
 		int territoireDefense = TerritoireAttaque(c, o);
 		
 		String tAttaquant = tabTerritoire[territoireAttaquant];
@@ -464,6 +473,8 @@ public class Bataille {
 		int size1 = listeAttaquant.size();
 		int size2 = listeDefense.size();
 		
+		System.out.println(size1 + " " + size2);
+		
 		String att1, att2, att3;
 		String def1, def2;
 		
@@ -471,41 +482,66 @@ public class Bataille {
 		int pDef1, pDef2;
 		
 		if (size2 == 2) {
-			att1 = (String) listeAttaquant.get(0);
-			att2 = (String) listeAttaquant.get(1);
+			
 			def1 = (String) listeDefense.get(0);
 			def2 = (String) listeDefense.get(1);
 			
-			pAtt1 = (int) PuissanceAtt.get(0);
-			pAtt2 = (int) PuissanceAtt.get(1);
 			pDef1 = (int) PuissanceDef.get(0);
 			pDef2 = (int) PuissanceDef.get(1);
 			
-			if (size1 == 2) {
+			if (size1 == 1) {
+				att1 = (String) listeAttaquant.get(0);
+				pAtt1 = (int) PuissanceAtt.get(0);
+				
+				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", def2  + " (" + pDef2 + ")", "", "");
+				StdDraw.pause(5000);
+			}
+			
+			else if (size1 == 2) {
+				
+				att1 = (String) listeAttaquant.get(0);
+				att2 = (String) listeAttaquant.get(1);
+				
+				pAtt1 = (int) PuissanceAtt.get(0);
+				pAtt2 = (int) PuissanceAtt.get(1);
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ") contre " + def2  + " (" + pDef2 + ")", "", "");
 				StdDraw.pause(5000);
 			}
-			else {
+			else if (size1 == 3) {
+				
+				att1 = (String) listeAttaquant.get(0);
+				att2 = (String) listeAttaquant.get(1);
 				att3 = (String) listeAttaquant.get(2);
+				
+				pAtt1 = (int) PuissanceAtt.get(0);
+				pAtt2 = (int) PuissanceAtt.get(1);
 				pAtt3 = (int) PuissanceAtt.get(2);
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ") contre " + def2  + " (" + pDef2 + ")", att3 + " (" + pAtt3 + ")", "");
 				StdDraw.pause(5000);
 			}
+			else {
+				c.afficherMessage("Pas de combat", "", "", "");
+				StdDraw.pause(5000);
+			}
 		}
-		else {
-			att1 = (String) listeAttaquant.get(0);
+		
+		else if (size2 == 1) {
 			def1 = (String) listeDefense.get(0);
-			
-			pAtt1 = (int) PuissanceAtt.get(0);
 			pDef1 = (int) PuissanceDef.get(0);
 			
 			if (size1 == 1) {
+				att1 = (String) listeAttaquant.get(0);
+				pAtt1 = (int) PuissanceAtt.get(0);
+				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", "", "", "");
 				StdDraw.pause(5000);
 			}
 			else if (size1 == 2) {
+				att1 = (String) listeAttaquant.get(0);
+				pAtt1 = (int) PuissanceAtt.get(0);
+				
 				att2 = (String) listeAttaquant.get(1);
 				pAtt2 = (int) PuissanceAtt.get(1);
 				
@@ -513,7 +549,10 @@ public class Bataille {
 				StdDraw.pause(5000);
 			}
 			
-			else {
+			else if (size1 == 3) {
+				att1 = (String) listeAttaquant.get(0);
+				pAtt1 = (int) PuissanceAtt.get(0);
+				
 				att2 = (String) listeAttaquant.get(1);
 				pAtt2 = (int) PuissanceAtt.get(1);
 				
@@ -521,6 +560,10 @@ public class Bataille {
 				pAtt3 = (int) PuissanceAtt.get(2);
 				
 				c.afficherMessage(att1 + " (" + pAtt1 + ") contre " + def1  + " (" + pDef1 + ")", att2 + " (" + pAtt2 + ")", att3 + " (" + pAtt3 + ")", "");
+				StdDraw.pause(5000);
+			}
+			else {
+				c.afficherMessage("Pas de combat", "", "", "");
 				StdDraw.pause(5000);
 			}
 		}

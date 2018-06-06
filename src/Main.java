@@ -164,77 +164,85 @@ public class Main {
 				}
 				break;
 			case 3:
-				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				V1 = j1.verifVictoire();
+				if (!j1.alTerritoire.isEmpty()) {
+					T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V1 = j1.verifVictoire();
+				}
 				
-				if (!V1) {
+				if (!V1 && !j2.alTerritoire.isEmpty()) {
 					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V2 = j2.verifVictoire();
 				}
-				if (!V1 && !V2) {
+				if ((!V1 && !V2) && !j3.alTerritoire.isEmpty()) {
 					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V3 = j3.verifVictoire();
 				}
 				break;
 			case 4:
-				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				V1 = j1.verifVictoire();
+				if (!j1.alTerritoire.isEmpty()) {
+					T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V1 = j1.verifVictoire();
+				}
 				
-				if (!V1) {
+				if (!V1  && !j2.alTerritoire.isEmpty()) {
 					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V2 = j2.verifVictoire();
 				}
-				if (!V1 && !V2) {
+				if ((!V1 && !V2) && !j3.alTerritoire.isEmpty()) {
 					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V3 = j3.verifVictoire();
 				}
-				if (!V1 && !V2 && !V3) {
+				if ((!V1 && !V2 && !V3) && !j4.alTerritoire.isEmpty()) {
 					T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V4 = j4.verifVictoire();
 				}
 				break;
 			case 5:
-				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				V1 = j1.verifVictoire();
+				if (!j1.alTerritoire.isEmpty()) {
+					T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V1 = j1.verifVictoire();
+				}
 				
-				if (!V1) {
+				if (!V1  && !j2.alTerritoire.isEmpty()) {
 					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V2 = j2.verifVictoire();
 				}
-				if (!V1 && !V2) {
+				if ((!V1 && !V2) && !j3.alTerritoire.isEmpty()) {
 					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V3 = j3.verifVictoire();
 				}
-				if (!V1 && !V2 && !V3) {
+				if ((!V1 && !V2 && !V3) && !j4.alTerritoire.isEmpty()) {
 					T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V4 = j4.verifVictoire();
 				}
-				if (!V1 && !V2 && !V3 && !V4) {
+				if ((!V1 && !V2 && !V3 && !V4) && !j5.alTerritoire.isEmpty()) {
 					T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V5 = j5.verifVictoire();
 				}
 				break;
 			case 6 :
-				T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
-				V1 = j1.verifVictoire();
+				if (!j1.alTerritoire.isEmpty()) {
+					T1.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
+					V1 = j1.verifVictoire();
+				}
 				
-				if (!V1) {
+				if (!V1  && !j2.alTerritoire.isEmpty()) {
 					T2.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V2 = j2.verifVictoire();
 				}
-				if (!V1 && !V2) {
+				if ((!V1 && !V2) && !j3.alTerritoire.isEmpty()) {
 					T3.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V3 = j3.verifVictoire();
 				}
-				if (!V1 && !V2 && !V3) {
+				if ((!V1 && !V2 && !V3) && !j4.alTerritoire.isEmpty()) {
 					T4.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V4 = j4.verifVictoire();
 				}
-				if (!V1 && !V2 && !V3 && !V4) {
+				if ((!V1 && !V2 && !V3 && !V4) && !j5.alTerritoire.isEmpty()) {
 					T5.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V5 = j5.verifVictoire();
 				}
-				if (!V1 && !V2 && !V3 && !V4 && !V5) {
+				if ((!V1 && !V2 && !V3 && !V4 && !V5) && !j6.alTerritoire.isEmpty()) {
 					T6.tour(nombreTour, c, o, j1, j2, j3, j4, j5, j6, tab, tabArmee, n);
 					V6 = j6.verifVictoire();
 				}
