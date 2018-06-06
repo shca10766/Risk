@@ -65,6 +65,10 @@ public class Main {
 		
 		int n = o.touchePresse();
 		
+		while (n < 2 || n > 6) {
+			n = o.touchePresse();
+		}
+		
 		// initialisation des joueurs
 		Joueur j1 = new Joueur(1);
 		Joueur j2 = new Joueur(2);
