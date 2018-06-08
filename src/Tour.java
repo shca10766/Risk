@@ -10,27 +10,27 @@ public class Tour {
 	}
 	
 	public void tour(int nombreTour, Carte c, ActionOrdi o, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String [] tab, Armee [] tabArmee, int n) {
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
 		
 		int i = j.getIndex();
 		
 		// Si l'on est plus au premier tour on ajoute des renforts
 		if (nombreTour != 0) {
+			c.afficherTerritoire();
+			c.afficherMessage("Ajouter vos renforts", "Cliquez sur un de vos territoires", "pour cela", "");
 			Renfort renf = new Renfort(j);
-			renf.renfort(n, c, tabArmee, tab, j1, j2, j3, j4, j5, j6);
+			renf.renfort(n, c, tabArmee, tab);
 			j.reinitTerritoireCapture();
 		}
 		
 		// Choix du type d'action
+		c.afficherTerritoire();
 		c.afficherMessage("Joueur " + i + " que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Fin du tour");
 		int choix = o.touchePresse();
 		
 		// Tant que le joueur ne décide pas d'arrêter il continue son tour
 		while (choix != 0) {
 			
-			c.AfficherCarte();
-			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+			c.afficherTerritoire();
 			
 			// Joueur choisit la bataille
 			if (choix == 1) {
@@ -43,7 +43,7 @@ public class Tour {
 				// Si le joueur a réussi à détruire toutes les unités ennemies il y a déplacement 
 				if (!vainqueur.isEmpty()) {
 					j.setTerritoireCapture();
-					Deplacement dep = new Deplacement(j1, vainqueur, territoireAttaque, territoireAttaquant);
+					Deplacement dep = new Deplacement(j, vainqueur, territoireAttaque, territoireAttaquant);
 					dep.invasion(tabArmee, j1, j2, j3, j4, j5, j6);
 				}
 			}
@@ -54,9 +54,14 @@ public class Tour {
 				dep1.deplacement(c, tabArmee, tab);
 			}
 			
+			else {
+				c.afficherTerritoire();
+				c.afficherMessage("Entrée invalide", "Veuillez réessayer", "", "");
+				StdDraw.pause(1500);
+			}
+			
 			// Choisit une nouvelle action
-			c.AfficherCarte();
-			c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+			c.afficherTerritoire();
 			c.afficherMessage("Que voulez vous faire", "Tapez 1 : Bataille", "Tapez 2 : Deplacement", "Tapez 0 : Fin du tour");
 			choix = o.touchePresse();	
 		}
@@ -67,8 +72,7 @@ public class Tour {
 			a.reinitMouvement();
 		}
 		
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+		c.afficherTerritoire();
 		c.afficherMessage("Fin du tour !", "", "", "");
 		StdDraw.pause(2000);
 	}

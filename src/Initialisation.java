@@ -85,7 +85,7 @@ public class Initialisation {
 		return ListeTerritoireJoueur;
 	}
 
-	public void initialisationArmee(String [] tabTerritoire, Armee [] tabArmee,  Carte c, Joueur j, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+	public void initialisationArmee(String [] tabTerritoire, Armee [] tabArmee,  Carte c, Joueur j) {
 		int i = j.getIndex();
 		int n = this.entier;
 		
@@ -112,6 +112,14 @@ public class Initialisation {
 			
 			// click sur un de ses territoires
 			while (!j.contientListe(k)) {
+				if (k == -1) {
+					c.afficherTerritoire();
+					c.afficherMessage("Cliquez sur un des points", "pour choisir un de vos territoire", "", "");
+				}
+				else {
+					c.afficherTerritoire();
+					c.afficherMessage("Ce territoire ne vous appartient pas", "", "", "");
+				}
 				k = o.click(c);
 			}
 			
@@ -119,16 +127,25 @@ public class Initialisation {
 			String terri = tabTerritoire[k];
 			Armee a = tabArmee[k];
 			
-			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, i, n, 7, c, a);
+			limiteUnite = ajoutArmee(tabArmee,"canon", terri, o, limiteUnite, i, 7, c, a);
 			
-			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, i, n, 3, c, a);
+			limiteUnite = ajoutArmee(tabArmee,"cavalier", terri, o, limiteUnite, i, 3, c, a);
 			
-			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, i, n, 1, c, a);
+			limiteUnite = ajoutArmee(tabArmee, "soldat", terri, o, limiteUnite, i, 1, c, a);
+			
+			if (limiteUnite != 0) {
+				c.afficherTerritoire();
+				c.afficherMessage("Joueur " + i +" : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour y", "ajouter une armée");
+			}
+			else {
+				c.afficherTerritoire();
+			}
 		}
 	}
 	
-	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int limite, int i, int n, int cout, Carte c, Armee a) {
+	public int ajoutArmee(Armee [] tab, String unite, String terri, ActionOrdi o, int limite, int i, int cout, Carte c, Armee a) {
 		if (limite >= cout) { // Si le cout de l'unité est inférieur au reste du nombre de la puissance à placer
+			c.afficherTerritoire();
 			c.afficherMessage("Joueur " + i, "Placez encore " +limite+ " unité(s))", "Territoire " +terri, "Combien de " + unite + " ajouter?");
 			
 			int touche = o.touchePresse();
@@ -141,9 +158,12 @@ public class Initialisation {
 				}
 				limite = limite - cout*touche;
 			}
-			
-			c.AfficherCarte();
-			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
+			else {
+				c.afficherTerritoire();
+				c.afficherMessage("Le coût d'ajout est trop élevé", "Veuillez ressayer", "", "");
+				StdDraw.pause(3000);
+				return ajoutArmee(tab, unite, terri, o, limite, i, cout, c, a);
+			}
 		}
 		return limite; // retourne le nombre d'unité restante à placer
 	}

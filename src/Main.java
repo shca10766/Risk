@@ -66,76 +66,80 @@ public class Main {
 		int n = o.touchePresse();
 		
 		while (n < 2 || n > 6) {
+			c.afficherMessage("", "", "Entrée invalide veuillez réessayer", "");
 			n = o.touchePresse();
 		}
 		
 		// initialisation des joueurs
-		Joueur j1 = new Joueur(1);
-		Joueur j2 = new Joueur(2);
-		Joueur j3 = new Joueur(3);
-		Joueur j4 = new Joueur(4);
-		Joueur j5 = new Joueur(5);
-		Joueur j6 = new Joueur(6);
+		Joueur j1 = new Joueur(1); c.j1 = j1;
+		Joueur j2 = new Joueur(2); c.j2 = j2;
+		Joueur j3 = new Joueur(3); c.j3 = j3;
+		Joueur j4 = new Joueur(4); c.j4 = j4;
+		Joueur j5 = new Joueur(5); c.j5 = j5;
+		Joueur j6 = new Joueur(6); c.j6 = j6;
+		
+		c.tabArmee = tabArmee;
+		c.n = n;
+		
 		
 		Initialisation init = new Initialisation(n);
 		
 		// Initialisation des territoires
 		init.initialisationTerritoire(j1, j2, j3, j4, j5, j6);
 		
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);	
+		c.afficherTerritoire();	
 		
 		// Initialisation de l'armée
 		switch (n) {
 		case 2:
-			c.afficherMessage("Joueur 1", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 2", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
+			c.afficherMessage("Joueur 1 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j1);
+			c.afficherMessage("Joueur 2 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j2);
 			break;
 		case 3:
-			c.afficherMessage("Joueur 1", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 2", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 3", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
+			c.afficherMessage("Joueur 1 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j1);
+			c.afficherMessage("Joueur 2 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j2);
+			c.afficherMessage("Joueur 3 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j3);
 			break;
 		case 4:
-			c.afficherMessage("Joueur 1", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 2", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 3", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 4", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
+			c.afficherMessage("Joueur 1 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j1);
+			c.afficherMessage("Joueur 2 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j2);
+			c.afficherMessage("Joueur 3 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j3);
+			c.afficherMessage("Joueur 4 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j4);
 			break;
 		case 5:
-			c.afficherMessage("Joueur 1", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 2", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 3", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 4", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 5", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6);
+			c.afficherMessage("Joueur 1 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j1);
+			c.afficherMessage("Joueur 2 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j2);
+			c.afficherMessage("Joueur 3 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j3);
+			c.afficherMessage("Joueur 4 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j4);
+			c.afficherMessage("Joueur 5 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j5);
 			break;
 		case 6: 
-			c.afficherMessage("Joueur 1", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j1, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 2", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j2, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 3", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j3, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 4", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j4, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 5", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j5, j1, j2, j3, j4, j5, j6);
-			c.afficherMessage("Joueur 6", "", "", "");
-			init.initialisationArmee(tab, tabArmee, c, j6, j1, j2, j3, j4, j5, j6);
+			c.afficherMessage("Joueur 1 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j1);
+			c.afficherMessage("Joueur 2 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j2);
+			c.afficherMessage("Joueur 3 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j3);
+			c.afficherMessage("Joueur 4 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j4);
+			c.afficherMessage("Joueur 5 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j5);
+			c.afficherMessage("Joueur 6 : Initialisez votre armée", "Pour cela cliquez sur un", "de vos territoires pour", "ajouter une armée");
+			init.initialisationArmee(tab, tabArmee, c, j6);
 			break;		
 		}
 		
@@ -255,8 +259,7 @@ public class Main {
 			
 			nombreTour++;
 		}
-		c.AfficherCarte();
-		c.afficherTerritoire(tabArmee, j1, j2, j3, j4, j5, j6, n);
+		c.afficherTerritoire();
 		// Cas du joueur gagnant
 		if (V1) {
 			c.afficherMessage("Victoire du Joueur 1", "", "", "");

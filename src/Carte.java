@@ -4,11 +4,22 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Carte {
 	
+	public Armee [] tabArmee;
+	public Joueur j1;
+	public Joueur j2;
+	public Joueur j3;
+	public Joueur j4;
+	public Joueur j5;
+	public Joueur j6;
+	public int n;
+	
+	
 	public void AfficherCarte() {
 		StdDraw.setCanvasSize(1300, 700); // échelle du cadre
 		StdDraw.picture(0.5, 0.5, "carte.png"); // placement de l'image
 		StdDraw.setXscale(0,1300);	// échelle de x
 		StdDraw.setYscale(700,0); // échelle de y
+		StdDraw.enableDoubleBuffering();
 	}
 	
 	// Affichage des messages à droite
@@ -18,6 +29,7 @@ public class Carte {
 		StdDraw.text(1140, 230, l2);
 		StdDraw.text(1140, 260, l3);
 		StdDraw.text(1140, 290, l4);
+		StdDraw.show();
 	}
 	
 	// Coordonnée x des points 
@@ -160,12 +172,13 @@ public class Carte {
 			StdDraw.filledCircle(x, y, 5);
 			StdDraw.setPenColor(StdDraw.BLACK);
 			StdDraw.circle(x, y, 5);
-			
+
 			StdDraw.rectangle(x, y + 6, 25, 13);
 			
 			Font font = new Font("Arial", Font.BOLD, 15);
 			StdDraw.setFont(font);
 			StdDraw.text(x, y + 15, s+":"+cv+":"+cn); // Affichage des unités par territoires
+			StdDraw.show();
 		}
 	}
 	
@@ -373,37 +386,40 @@ public class Carte {
 		}
 	}
 	
-	public void afficherTerritoire(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, int n) {
+	public void afficherTerritoire() {
+		StdDraw.clear();
+		StdDraw.picture(650, 350, "carte.png"); // placement de l'image
+		
 		switch(n) {
 		case 2 :
-			afficherPoint(tab, j1.getListeTerritoire(), 1);
-			afficherPoint(tab, j2.getListeTerritoire(), 2);
+			afficherPoint(tabArmee, j1.getListeTerritoire(), 1);
+			afficherPoint(tabArmee, j2.getListeTerritoire(), 2);
 			break;
 		case 3 :
-			afficherPoint(tab, j1.getListeTerritoire(), 1);
-			afficherPoint(tab, j2.getListeTerritoire(), 2);
-			afficherPoint(tab, j3.getListeTerritoire(), 3);
+			afficherPoint(tabArmee, j1.getListeTerritoire(), 1);
+			afficherPoint(tabArmee, j2.getListeTerritoire(), 2);
+			afficherPoint(tabArmee, j3.getListeTerritoire(), 3);
 			break;
 		case 4 :
-			afficherPoint(tab, j1.getListeTerritoire(), 1);
-			afficherPoint(tab, j2.getListeTerritoire(), 2);
-			afficherPoint(tab, j3.getListeTerritoire(), 3);
-			afficherPoint(tab, j4.getListeTerritoire(), 4);
+			afficherPoint(tabArmee, j1.getListeTerritoire(), 1);
+			afficherPoint(tabArmee, j2.getListeTerritoire(), 2);
+			afficherPoint(tabArmee, j3.getListeTerritoire(), 3);
+			afficherPoint(tabArmee, j4.getListeTerritoire(), 4);
 			break;
 		case 5 :
-			afficherPoint(tab, j1.getListeTerritoire(), 1);
-			afficherPoint(tab, j2.getListeTerritoire(), 2);
-			afficherPoint(tab, j3.getListeTerritoire(), 3);
-			afficherPoint(tab, j4.getListeTerritoire(), 4);
-			afficherPoint(tab, j5.getListeTerritoire(), 5);
+			afficherPoint(tabArmee, j1.getListeTerritoire(), 1);
+			afficherPoint(tabArmee, j2.getListeTerritoire(), 2);
+			afficherPoint(tabArmee, j3.getListeTerritoire(), 3);
+			afficherPoint(tabArmee, j4.getListeTerritoire(), 4);
+			afficherPoint(tabArmee, j5.getListeTerritoire(), 5);
 			break;
 		case 6 :
-			afficherPoint(tab, j1.getListeTerritoire(), 1);
-			afficherPoint(tab, j2.getListeTerritoire(), 2);
-			afficherPoint(tab, j3.getListeTerritoire(), 3);
-			afficherPoint(tab, j4.getListeTerritoire(), 4);
-			afficherPoint(tab, j5.getListeTerritoire(), 5);
-			afficherPoint(tab, j6.getListeTerritoire(), 6);
+			afficherPoint(tabArmee, j1.getListeTerritoire(), 1);
+			afficherPoint(tabArmee, j2.getListeTerritoire(), 2);
+			afficherPoint(tabArmee, j3.getListeTerritoire(), 3);
+			afficherPoint(tabArmee, j4.getListeTerritoire(), 4);
+			afficherPoint(tabArmee, j5.getListeTerritoire(), 5);
+			afficherPoint(tabArmee, j6.getListeTerritoire(), 6);
 			break;
 		}
 	}

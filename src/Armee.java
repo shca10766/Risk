@@ -20,7 +20,7 @@ public class Armee {
 	}
 	
 	public int puissance() {
-		int p = 7*this.nombreCanon + 3*this.nombreCavalier + this.nombreSoldat;
+		int p = this.nombreCanon + this.nombreCavalier + this.nombreSoldat;
 		return p;
 	}
 	

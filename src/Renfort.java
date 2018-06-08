@@ -58,7 +58,7 @@ public class Renfort {
 		return r;
 	}
 
-	public void renfort(int n, Carte c, Armee [] tabArmee, String [] tabTerritoire, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6) {
+	public void renfort(int n, Carte c, Armee [] tabArmee, String [] tabTerritoire) {
 		int i = j.getIndex();
 		
 		ArrayList<Integer> al = j.getListeTerritoire();
@@ -78,24 +78,38 @@ public class Renfort {
 			
 			// Vérifier que le joueur click sur un de ses territoires
 			while (!j.contientListe(k)) {
+				if (k == -1) {
+					c.afficherTerritoire();
+					c.afficherMessage("Cliquez sur un point", "pour choisir une territoire", "correspondant", "");
+				}
+				else {
+					c.afficherTerritoire();
+					c.afficherMessage("Ce territoire ne vous", "appartient pas", "", "");
+				}
 				k = o.click(c);
 			}
 			
 			String terri = tabTerritoire[k];
 			Armee a = tabArmee[k];
 			
-			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "canon", terri, o, limiteUnite, i, n, 7, c, a);
+			limiteUnite = ajoutArmee(tabArmee, "canon", terri, o, limiteUnite, i, 7, c, a);
 			
-			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "cavalier", terri, o, limiteUnite, i, n, 3, c, a);
+			limiteUnite = ajoutArmee(tabArmee, "cavalier", terri, o, limiteUnite, i, 3, c, a);
 			
-			limiteUnite = ajoutArmee(tabArmee, j1, j2, j3, j4, j5, j6, "soldat", terri, o, limiteUnite, i, n, 1, c, a);
+			limiteUnite = ajoutArmee(tabArmee, "soldat", terri, o, limiteUnite, i, 1, c, a);
+			
+			if (limiteUnite != 0) {
+				c.afficherTerritoire();
+				c.afficherMessage("Ajouter vos renforts", "Cliquez sur un de vos territoires", "pour cela", "");
+			}
 			
 		}
 	}
 	
-	public int ajoutArmee(Armee [] tab, Joueur j1, Joueur j2, Joueur j3, Joueur j4, Joueur j5, Joueur j6, String unite, String terri, ActionOrdi o, int limite, int i, int n, int cout, Carte c, Armee a) {
+	public int ajoutArmee(Armee [] tab, String unite, String terri, ActionOrdi o, int limite, int i, int cout, Carte c, Armee a) {
 		if (limite >= cout) { // Si le nombre d'unité restantes à placer est supérieure ou égale au coût du type de l'unité
 			
+			c.afficherTerritoire();
 			c.afficherMessage("Joueur " + i + " insérer vos renforts", "(reste " +limite+ " unité(s))", "Territoire " +terri, "Combien de " + unite + " ajouter?");
 			
 			int touche = o.touchePresse();
@@ -110,11 +124,11 @@ public class Renfort {
 			}
 			
 			else {
-				c.afficherMessage("", "", "", "Nombre d'unité restant insuffisant");
-				StdDraw.pause(3000);
+				c.afficherTerritoire();
+				c.afficherMessage("", "", "", "Nombre d'unité restante insuffisant");
+				StdDraw.pause(1500);
+				return ajoutArmee(tab, unite, terri, o, limite, i, cout, c, a);
 			}
-			c.AfficherCarte();
-			c.afficherTerritoire(tab, j1, j2, j3, j4, j5, j6, n);
 		}
 		return limite;
 	}

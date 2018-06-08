@@ -63,16 +63,16 @@ public class Deplacement {
 			for (int k1 = 0; k1 < cnDep; k1++) {
 				armeeDeplace.add("canon");
 			}
+			p = p - cnDep;
 		}
-		p = p - cnDep;
 		
 		int cvDep = o.touchePresse();
 		if ((cvDep <= cv) && (p - cvDep > 0) && (cv - cv0) >= cvDep) {
 			for (int k2 = 0; k2 < cvDep; k2++) {
 				armeeDeplace.add("cavalier");
 			}
+			p = p - cvDep;
 		}
-		p = p - cvDep;
 		
 		int sDep = o.touchePresse();
 		if ((sDep <= s) && (p - sDep > 0) && (s - s0) >= sDep) {
@@ -90,6 +90,14 @@ public class Deplacement {
 		int t = o.click(c);
 		boolean possessionJoueur = j.contientListe(t);
 		while (!possessionJoueur) {
+			if (t == -1) {
+				c.afficherTerritoire();
+				c.afficherMessage("Il est nécessaire de", "cliquer sur le territoire", "voulu", "");
+			}
+			else {
+				c.afficherTerritoire();
+				c.afficherMessage("Ce territoire ne vous appartient pas", "", "", "");
+			}
 			t = o.click(c);
 			possessionJoueur = j.contientListe(t);
 		}
