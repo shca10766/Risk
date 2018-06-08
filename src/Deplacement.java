@@ -33,7 +33,11 @@ public class Deplacement {
 		
 		// Vérifier que les deux territoires sont voisins
 		while (!territoireVoisin) {
+			c.afficherTerritoire();
+			c.afficherMessage("Ces territoires ne sont pas voisins", "", "", "");
+			territoireDepart = choixTerritoire(o, c);
 			territoireArrive = choixTerritoire(o, c);
+			t1 = tabTerritoire[territoireDepart];
 			t2 = tabTerritoire[territoireArrive];
 			territoireVoisin = c.verifCorrespondance(t1, t2);
 		}
@@ -53,6 +57,7 @@ public class Deplacement {
 		
 		ArrayList armeeDeplace = new ArrayList();
 		
+		c.afficherTerritoire();
 		c.afficherMessage("Combien de canon deplacer? (" + cn0 + " au repos)", "Combien de cavalier deplacer? (" + cv0 + " au repos)", "Combien de soldat deplacer?  (" + s0 + " au repos)", "");
 		
 		int cnDep = o.touchePresse();

@@ -232,6 +232,7 @@ public class Bataille {
 		}
 		
 		al = ordrePuissance(al);
+		al = ordreTypeUnite(al);
 		return al;
 	}
 	
@@ -491,7 +492,7 @@ public class Bataille {
 		return al;
 	}
 	
-	public ArrayList ordreTypeUniteAttaquant(ArrayList al) {
+	public ArrayList ordreTypeUnite(ArrayList al) {
 		int p1, p2, p3;
 		String u1, u2, u3;
 		int s = al.size();
